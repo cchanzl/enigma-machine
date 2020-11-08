@@ -4,7 +4,7 @@ enigma:  main.o enigma.o
 main.o: main.cpp enigma.h
 	g++ -Wall -g -c main.cpp
 
-enigma.o: enigma.cpp enigma.h
+enigma.o: enigma.cpp enigma.h errors.h
 	g++ -Wall -g -c enigma.cpp
 
 clean:

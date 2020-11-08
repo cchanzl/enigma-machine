@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "enigma.h"
 
 using namespace std;
@@ -17,15 +18,22 @@ int main (int argc, char** argv){
   
   for ( int x = 0; x<26; x++){
     pb_mapping[x] = x;
-    cout << pb_mapping[x] << endl;
+    cout << setw(2) << pb_mapping[x] << " ";
   }
+  cout << endl;
 
-  load_pb_setting(argv[1], pb_setting);
+  load_pb_setting(argv[1], pb_setting, pb_mapping);
   
   for ( int x = 0; x<26; x++){
-    cout << pb_setting[x] << endl;
+    cout << setw(2) << pb_setting[x] << " ";
   }
-  
+  cout << endl;
+
+  for ( int x = 0; x<26; x++){
+    cout << setw(2) << pb_mapping[x] << " ";
+  }
+  cout << endl;
+
   
   
 
