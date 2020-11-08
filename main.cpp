@@ -29,6 +29,8 @@ int main (int argc, char** argv){
   
   Rotor right(argv[3], pos_array, 2);
   right.print_rotor_setting();
+  right.rotate_rotor();
+  right.print_rotor_setting();
 
 
   // =========== SETTING REFLECTORS ===========

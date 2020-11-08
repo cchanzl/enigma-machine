@@ -137,22 +137,59 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 
 // ========== rotor functions ==========
 
+// to rotate rotor by one notch
+void Rotor::rotate_rotor(){
+  // first, find current position
+  int start_12 = input_mapping[0]+1;
+  int end_12 = output_mapping[0]+1;
+  
+  for ( int i = 0; i < 26; i++){
+    input_mapping[i] = start_12;
+    if (start_12 == 25) start_12 = -1;
+    start_12 += 1;
+
+    output_mapping[i] = end_12;
+    if (end_12 == 25) end_12 = -1;
+    end_12 += 1;
+
+  }
+}
+
+
 // print function for debugging
 void Rotor::print_rotor_setting(){
-  cout << "The starting position for rotor number " << rotor_pos << " is: " << start_pos << endl;
-  cout << "The rotor setting for rotor number " << rotor_pos << " is:" << endl;
+  cout << endl;
+  cout << "Starting position for rotor " << rotor_pos << " is: " << start_pos << endl;
+  cout << "Input mapping: ";
+  for ( int x = 0; x<26; x++) cout << setw(2) << input_mapping[x] << " ";
+  cout << endl;
+
+  cout << "Rotor mapping: ";
   for ( int x = 0; x<26; x++) cout << setw(2) << rotor_mapping[x] << " ";
   cout << endl;
+
+  cout << "Outpu mapping: ";
+  for ( int x = 0; x<26; x++) cout << setw(2) << output_mapping[x] << " ";
+  cout << endl;
+
   cout << "Notch for rotor number " << rotor_pos << " is at " << notch << endl;
 }
 
 // load rotor settings
 void Rotor::load_rotor_setting(const char* filename, const int pos_array[], const int rotor_pos){
 
-  // Assign position of rotor
+  // Assign starting position of rotor
   this->start_pos = pos_array[rotor_pos];
-  
-  // loading rotor config into rotor_mapping
+
+  // Assign starting input rotor position
+  int start_12 = start_pos;
+  for ( int i = 0; i < 26; i++){
+    input_mapping[i] = start_12;
+    if (start_12 == 25) start_12 = -1;
+    start_12 += 1;
+  }
+ 
+  // loading internal rotor config into rotor_mapping
   ifstream in(filename);
   if (!in) {
     cout << "Failed!" << '\n';
@@ -206,6 +243,14 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   if ( count != 27 ) {
    cout << "Error: Rotor config does not provide a mapping for some input. " << endl;
    exit(INVALID_ROTOR_MAPPING);
+  }
+
+  // Assign starting output rotor position
+  int end_12 = rotor_mapping[start_pos];
+  for ( int i = 0; i < 26; i++){
+    output_mapping[i] = end_12;
+    if (end_12 == 25) end_12 = -1;
+    end_12 += 1;
   }
   
 }
