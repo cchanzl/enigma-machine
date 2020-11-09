@@ -194,7 +194,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
     count++;
   }
 
-  if ( count != number_of_rotors ){   // +1 as the last loop adds 1 before exiting 
+  if ( count != number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
     cout << "Error: Position config does not contain enough starting positions for the number of rotors specified." << endl;
     exit(NO_ROTOR_STARTING_POSITION);
   }  
@@ -209,17 +209,45 @@ void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number
     // right.rotate_rotor();
     // right.print_rotor_setting();
   }
-
 }
 
-// ========== rotor functions ==========
+void read_input(int enigma_input[]){
+  cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
+
+  int count = 0;
+  char input;
+
+  while(cin >> input){
+
+    // to check if input is from A to Z
+    if ( input < 65 || input > 90){
+      if ( input == 32 ) break;
+      cout << "Error: Input characters are invalid." << endl;
+      exit(INVALID_INPUT_CHARACTER);
+    }; 
+    
+    // convert string to integer if numeric
+    if ( input == 32 )int text = 99;
+    else int text = static_cast<int>(char) - 65;  
+  
+    // add to reflector setting
+    enigma_input[count] = text;
+
+    count++; 
+ 
+}
+
+
+
+// ========== rotor class member functions ==========
 
 // to rotate rotor by one notch
 void Rotor::rotate_rotor(){
-  // first, find current position
+  // first, find new position
   int start_12 = input_mapping[0]+1;
   int end_12 = output_mapping[0]+1;
-  
+
+  //second, +1 to get each subsequent position
   for ( int i = 0; i < 26; i++){
     input_mapping[i] = start_12;
     if (start_12 == 25) start_12 = -1;
@@ -228,7 +256,6 @@ void Rotor::rotate_rotor(){
     output_mapping[i] = end_12;
     if (end_12 == 25) end_12 = -1;
     end_12 += 1;
-
   }
 }
 
@@ -236,6 +263,7 @@ void Rotor::rotate_rotor(){
 // print function for debugging
 void Rotor::print_rotor_setting(){
   cout << endl;
+  
   cout << "Starting position for rotor " << rotor_pos << " is: " << start_pos << endl;
   cout << "Input mapping: ";
   for ( int x = 0; x<26; x++) cout << setw(2) << input_mapping[x] << " ";

@@ -50,11 +50,12 @@ int main (int argc, char** argv){
   cout << endl;
 
   // =========== READING INPUT CHARACTERS ===========
+  int enigma_input = new int[];
+  read_input(enigma_input);
 
-
-
+  
 
   // =========== OUTPUT DECODED CHARACTERS ===========
   
-  return 1;
+  return 0;
 }
