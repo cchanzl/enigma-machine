@@ -19,13 +19,12 @@ class Rotor{
     this -> rotor_pos = rotor_pos;
   }
 
-  // print rotor details for debugging purposes
-  void print_rotor_setting();
+  void print_rotor_setting();    // print rotor details for debugging purposes
   void rotate_rotor();           //rotate rotor BEFORE it receives signal from pb
 };
 
 void load_pb_setting(const char* filename, int pb_mapping[26]);
+void load_rf_setting(const char* filename, int rf_mapping[26]);
 void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors);
-
-
+void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number_of_rotors, char* argv[]);
 #endif
