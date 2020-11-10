@@ -211,32 +211,90 @@ void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number
   }
 }
 
-void read_input(int enigma_input[]){
+void read_input(int enigma_input[], int& input_length){
   cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
 
+  int LIMIT_LENGTH = 256;
   int count = 0;
-  char input;
-
-  while(cin >> input){
-
-    // to check if input is from A to Z
-    if ( input < 65 || input > 90){
-      if ( input == 32 ) break;
-      cout << "Error: Input characters are invalid." << endl;
-      exit(INVALID_INPUT_CHARACTER);
-    }; 
-    
-    // convert string to integer if numeric
-    if ( input == 32 )int text = 99;
-    else int text = static_cast<int>(char) - 65;  
+  string input;
+  cin >> input;
   
-    // add to reflector setting
-    enigma_input[count] = text;
+  for(char& c : input){
+  
+    // to check if input is from A to Z
+    if ( c < 65 || c > 90){
+      if ( c == 32 ) continue;
+      cout << "Error: Input contains invalid characters." << endl;
+      exit(INVALID_INPUT_CHARACTER);
+    };
+    
+    // convert string to integer if numeric and add to enigma_input
+    if ( c == 32 )enigma_input[count] = 99;
+    else enigma_input[count] = static_cast<int>(c) - 65;  
 
-    count++; 
- 
+    count++;
+    
+    if ( count-1 == LIMIT_LENGTH ) cout << "Error: Message is longer than 256 char." << endl;
+    
+    }
+
+  input_length = count;
+    
 }
 
+
+void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int rf_mapping[26], Rotor enigma_rotors[], int number_of_rotors, int enigma_output[]){
+
+  for ( int i = 0; i < input_length; i++){
+
+    int output = 0;
+    int input = enigma_input[i];
+    
+    //Scramble through Plugboard
+    output = pb_mapping[input];
+
+    //Rotate righthand most rotor once
+    //enigma_rotors[number_of_rotors - 1].rotate_rotor();
+    
+    //Enter row of rotors from plugboard. Start from the right.
+    for ( int i = number_of_rotors - 1; i >= 0; i--){
+      output = enigma_rotors[i].right_to_left(output);
+      /*if ( enigma_rotors[i].input_mapping[0] == enigma_rotors[i].notch && i != 0 ) {
+	enigma_rotors[i].rotate_rotor();
+	}*/
+      cout << "The <<<< output for rotor " << i << " is " << output << endl;
+    }
+    cout << endl;
+    //Enter reflector
+    output = rf_mapping[output];
+    
+    //Enter set of rotors from reflector. Start from the left.
+    for ( int i = 0; i < number_of_rotors ; i++){
+      output = enigma_rotors[i].left_to_right(output);
+      cout << "The >>>> output for rotor " << i << " is " << output << endl;
+    }
+    cout << endl;
+
+    //Scramble through Plugboard
+    for ( int i = 0; i < 26; i++){
+      if ( pb_mapping[i] == output ) {
+	output = i;
+	break;
+      }
+    }
+
+    //Allocate to output array
+    enigma_output[i] = output;    
+  }
+  
+  //print output
+  for ( int i = 0; i < input_length; i++){
+    cout << enigma_output[i] << endl;
+    char letter = static_cast<char>(enigma_output[i] + 65); 
+    cout << setw(2) << letter << endl;
+  }
+  
+}
 
 
 // ========== rotor class member functions ==========
@@ -265,6 +323,11 @@ void Rotor::print_rotor_setting(){
   cout << endl;
   
   cout << "Starting position for rotor " << rotor_pos << " is: " << start_pos << endl;
+  
+  cout << "reference num: ";
+  for ( int i = 0; i<26; i++) cout << setw(2) << i << " ";
+  cout << endl;
+
   cout << "Input mapping: ";
   for ( int x = 0; x<26; x++) cout << setw(2) << input_mapping[x] << " ";
   cout << endl;
@@ -351,12 +414,47 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   }
 
   // Assign starting output rotor position
-  int end_12 = rotor_mapping[start_pos];
-  for ( int i = 0; i < 26; i++){
-    output_mapping[i] = end_12;
-    if (end_12 == 25) end_12 = -1;
-    end_12 += 1;
-  }
+  for ( int i = 0; i < 26; i++) output_mapping[i] = i;
   
 }
 
+int Rotor::right_to_left(int right_input){
+
+  int left_output;
+
+  left_output = input_mapping[right_input];
+  left_output = rotor_mapping[left_output];
+
+  for ( int i = 0; i < 26; i++){
+    if ( input_mapping[i] == left_output ) {
+      left_output = i;
+      break;
+    }
+  }
+
+  return left_output;
+}
+
+
+int Rotor::left_to_right(int left_input){
+
+  int right_output;
+
+  right_output = input_mapping[left_input];
+
+  for ( int i = 0; i < 26; i++){
+    if ( rotor_mapping[i] == right_output ) {
+      right_output = i;
+      break;
+    }
+  }
+  
+  for ( int i = 0; i < 26; i++){
+    if ( input_mapping[i] == right_output ) {
+      right_output = i;
+      break;
+    }
+  }
+  
+  return right_output;
+}

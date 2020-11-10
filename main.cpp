@@ -50,12 +50,21 @@ int main (int argc, char** argv){
   cout << endl;
 
   // =========== READING INPUT CHARACTERS ===========
-  int enigma_input = new int[];
-  read_input(enigma_input);
+  int input_length;
+  int* enigma_input = new int[input_length];
+  read_input(enigma_input, input_length);
 
+  // Print inputs into enigma machine
+  for ( int x = 0; x<input_length; x++) {
+    cout << setw(2) << enigma_input[x] << " ";
+  }
+  cout << endl;
   
-
   // =========== OUTPUT DECODED CHARACTERS ===========
+  int enigma_output[input_length];
+  enigma_machine(enigma_input, input_length, pb_mapping, rf_mapping, enigma_rotors, number_of_rotors, enigma_output);
   
+  delete [] enigma_input;
+
   return 0;
 }
