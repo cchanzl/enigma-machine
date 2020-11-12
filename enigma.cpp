@@ -9,6 +9,25 @@
 
 using namespace std;
 
+// ========== internal helper functions ==========
+
+// this function returns the index position of the second argument in the array
+void search_array(int rotor_mapping[], int& output){
+
+ for ( int i = 0; i < 26; i++){
+   if ( rotor_mapping[i] == output ) {
+     output = i;
+     break;
+   }
+ }
+ 
+}
+
+
+// ========== functions that are not member of any user defined class ==========
+
+
+// this function loads the reflector settings from the parameters provided
 void load_rf_setting(const char* filename, int rf_mapping[26]){
  int rf_setting[26];
   
@@ -76,6 +95,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   
 }
 
+// this function loads the plugboard settings from parameters provided
 void load_pb_setting(const char* filename, int pb_mapping[26]){
 
   int pb_setting[26];
@@ -157,7 +177,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
   
 }
 
-
+// this function loads the starting rotor position setting from parameters provided
 void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors){
 
   // loading rotor config into rotor_mapping
@@ -201,16 +221,16 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 
 }
 
+// this function initialise enigma_rotors based on input parameters
 void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number_of_rotors, char* argv[]){
   // Initialise each Rotor from left to right
   for ( int i = 0; i < number_of_rotors; i++){
     enigma_rotors[i] = Rotor(argv[3+i], pos_array, i);
     enigma_rotors[i].print_rotor_setting();
-    // right.rotate_rotor();
-    // right.print_rotor_setting();
   }
 }
 
+// this function reads input from from the standard input stream into an array
 void read_input(int enigma_input[], int& input_length){
   cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
 
@@ -242,7 +262,7 @@ void read_input(int enigma_input[], int& input_length){
     
 }
 
-
+// this function brings together all the necessary parts of the enigma machine to encode/decode input to output
 void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int rf_mapping[26], Rotor enigma_rotors[], int number_of_rotors, int enigma_output[]){
 
   for ( int i = 0; i < input_length; i++){
@@ -276,14 +296,9 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     cout << endl;
 
     //Scramble through Plugboard
-    for ( int i = 0; i < 26; i++){
-      if ( pb_mapping[i] == output ) {
-	output = i;
-	break;
-      }
-    }
+    search_array(pb_mapping, output);
 
-    //Allocate to output array
+    //Assign to output array
     enigma_output[i] = output;    
   }
   
@@ -299,7 +314,7 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
 
 // ========== rotor class member functions ==========
 
-// to rotate rotor by one notch
+// this function rotates rotor by one notch
 void Rotor::rotate_rotor(){
   // first, find new position
   int start_12 = input_mapping[0]+1;
@@ -317,8 +332,7 @@ void Rotor::rotate_rotor(){
   }
 }
 
-
-// print function for debugging
+// this function prints rotor settings for debugging purposes
 void Rotor::print_rotor_setting(){
   cout << endl;
   
@@ -343,7 +357,7 @@ void Rotor::print_rotor_setting(){
   cout << "Notch for rotor number " << rotor_pos << " is at " << notch << endl;
 }
 
-// load rotor settings
+// this member function loads rotor settings from paramters provided, baesd on the rotors position in the machine
 void Rotor::load_rotor_setting(const char* filename, const int pos_array[], const int rotor_pos){
 
   // Assign starting position of rotor
@@ -418,43 +432,27 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   
 }
 
+//this member function scrambles input into a rotor entering from right to left
 int Rotor::right_to_left(int right_input){
 
   int left_output;
 
   left_output = input_mapping[right_input];
   left_output = rotor_mapping[left_output];
-
-  for ( int i = 0; i < 26; i++){
-    if ( input_mapping[i] == left_output ) {
-      left_output = i;
-      break;
-    }
-  }
-
+  search_array(input_mapping, left_output);
+ 
   return left_output;
 }
 
-
+//this member function scrambles input into a rotor entering from left to right
 int Rotor::left_to_right(int left_input){
 
   int right_output;
 
   right_output = input_mapping[left_input];
-
-  for ( int i = 0; i < 26; i++){
-    if ( rotor_mapping[i] == right_output ) {
-      right_output = i;
-      break;
-    }
-  }
-  
-  for ( int i = 0; i < 26; i++){
-    if ( input_mapping[i] == right_output ) {
-      right_output = i;
-      break;
-    }
-  }
+  search_array(rotor_mapping, right_output);
+  search_array(input_mapping, right_output);
   
   return right_output;
 }
+
