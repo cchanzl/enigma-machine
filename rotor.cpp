@@ -60,9 +60,9 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 
 // this function initialise enigma_rotors based on input parameters
 void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number_of_rotors, char* argv[]){
-  // Initialise each Rotor from left to right
-  for ( int i = 0; i < number_of_rotors; i++){
-    enigma_rotors[i] = Rotor(argv[3+i], pos_array, i);
+  // Initialise each Rotor from right (higher number) to left (lower number)
+  for ( int i = number_of_rotors - 1; i >= 0; i--){
+    enigma_rotors[i] = Rotor(argv[3+i], pos_array, i, number_of_rotors);
     enigma_rotors[i].print_rotor_setting();
   }
 }
@@ -70,21 +70,29 @@ void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number
 
 // ========== rotor class member functions ==========
 
+// this function rotates the rotor based on the notch
+void Rotor::rotor_rotation(Rotor enigma_rotors[], int number_of_rotors, int rotor_num){
+
+  // if it is rightmost rotor, rotate immediately
+  if ( rotor_num == number_of_rotors - 1) enigma_rotors[rotor_num].rotate_rotor();
+  else
+    for ( int n = 0; n < 26; n++){
+      if ( enigma_rotors[rotor_num+1].notch[n] == enigma_rotors[rotor_num+1].input_mapping[0]) {
+	enigma_rotors[rotor_num].rotate_rotor();
+      }  
+    }
+}
+
 // this function rotates rotor by one notch
 void Rotor::rotate_rotor(){
   // first, find new position
   int start_12 = input_mapping[0]+1;
-  int end_12 = output_mapping[0]+1;
-
+  
   //second, +1 to get each subsequent position
   for ( int i = 0; i < 26; i++){
     input_mapping[i] = start_12;
     if (start_12 == 25) start_12 = -1;
     start_12 += 1;
-
-    output_mapping[i] = end_12;
-    if (end_12 == 25) end_12 = -1;
-    end_12 += 1;
   }
 }
 
@@ -106,14 +114,12 @@ void Rotor::print_rotor_setting(){
   for ( int x = 0; x<26; x++) cout << setw(2) << rotor_mapping[x] << " ";
   cout << endl;
 
-  cout << "Outpu mapping: ";
-  for ( int x = 0; x<26; x++) cout << setw(2) << output_mapping[x] << " ";
+  cout << "Notch mapping: ";
+  for ( int x = 0; x<26; x++) cout << setw(2) << notch[x] << " ";
   cout << endl;
-
-  cout << "Notch for rotor number " << rotor_pos << " is at " << notch << endl;
 }
 
-// this member function loads rotor settings from paramters provided, baesd on the rotors position in the machine
+// this member function loads rotor settings from paramters provided, based on the rotors position in the machine
 void Rotor::load_rotor_setting(const char* filename, const int pos_array[], const int rotor_pos){
 
   // Assign starting position of rotor
@@ -137,6 +143,11 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   int count = 0;      // counts how many rotor config are defined
   string input;
 
+  // to initilise notch array
+  for ( int i = 0; i < 26; i ++){
+    notch[i] = 99;
+  }
+
   while(in >> input){
 
     // check for non-numeric characters
@@ -156,35 +167,31 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
       exit(INVALID_INDEX);
     }
     
-    // add to rotor setting
-    if ( count == 26 ) notch = setting; 
+    // for all numbers after the first 26, add it to notch setting
+    if ( count > 25 ) {
+      notch[count-26] = setting; 
+    }
     else rotor_mapping[count] = setting;
     
-    // check if number is used before
-    for ( int i = 0; i < count; i++){
-      if ( count == 26 ) break;    // to avoid checking notch position
-      if ( rotor_mapping[count] == rotor_mapping[i] ) {
-	cout << "Error: Rotor config attempts to map more than one input to the same output." << endl;
-	exit(INVALID_ROTOR_MAPPING);
+    // check if number in first 26 position is repeated
+    if ( count < 26 ){
+      for ( int i = 0; i < count; i++){
+	if ( rotor_mapping[count] == rotor_mapping[i] ) {
+	  cout << "Error: Rotor config attempts to map more than one input to the same output." << endl;
+	  exit(INVALID_ROTOR_MAPPING);
+	}
       }
     }
     
     count++;
 
-    if ( count > 27 ) {   // 27 because the last loop will increment count one more time
-      cout << "Error: Rotor config contains more than 27 numbers. " << endl;
-      exit(INVALID_ROTOR_MAPPING);
-    }
-    
   }
-
-  if ( count != 27 ) {
-   cout << "Error: Rotor config does not provide a mapping for some input. " << endl;
-   exit(INVALID_ROTOR_MAPPING);
+  
+  if ( count < 26 ) {   // rotor setting must have at least 26 numbers
+    cout << "Error: Rotor config contains less than 26 numbers. " << endl;
+    exit(INVALID_ROTOR_MAPPING);
   }
-
-  // Assign starting output rotor position
-  for ( int i = 0; i < 26; i++) output_mapping[i] = i;
+  
   
 }
 

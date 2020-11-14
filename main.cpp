@@ -70,6 +70,6 @@ int main (int argc, char** argv){
   enigma_machine(enigma_input, input_length, pb_mapping, rf_mapping, enigma_rotors, number_of_rotors, enigma_output);
   
   delete [] enigma_input;
-
+  
   return 0;
 }
