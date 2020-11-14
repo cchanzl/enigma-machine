@@ -74,19 +74,22 @@ void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number
 void Rotor::rotor_rotation(Rotor enigma_rotors[], int number_of_rotors, int rotor_num){
 
   // if it is rightmost rotor, rotate immediately
-  if ( rotor_num == number_of_rotors - 1) enigma_rotors[rotor_num].rotate_rotor();
-  else
+  if ( rotor_num == number_of_rotors - 1) rotate_rotor();
+  else {
     for ( int n = 0; n < 26; n++){
-      if ( enigma_rotors[rotor_num+1].notch[n] == enigma_rotors[rotor_num+1].input_mapping[0]) {
-	enigma_rotors[rotor_num].rotate_rotor();
-      }  
+      if ( enigma_rotors[rotor_num+1].notch[n] == enigma_rotors[rotor_num+1].input_mapping[25]) rotate_rotor();
     }
+  }
 }
 
 // this function rotates rotor by one notch
 void Rotor::rotate_rotor(){
+
+  int start_12;
+  
   // first, find new position
-  int start_12 = input_mapping[0]+1;
+  if ( input_mapping[0]+1 == 26 ) start_12 = 0;
+  else start_12 = input_mapping[0]+1;
   
   //second, +1 to get each subsequent position
   for ( int i = 0; i < 26; i++){

@@ -13,6 +13,7 @@ class Rotor{
   void rotate_rotor();           // to rotate rotor by one position
   
  public:
+ 
   // default constructor. Note that rotor_pos starts from 0 for the left most rotor.
   Rotor(const char*filename, const int pos_array[], const int rotor_pos, const int number_of_rotors){  
     load_rotor_setting(filename, pos_array, rotor_pos);
