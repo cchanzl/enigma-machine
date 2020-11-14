@@ -1,6 +1,11 @@
 #include <iostream>
 #include <iomanip>
+
+#include "rotor.h"
+#include "reflector.h"
+#include "plugboard.h"
 #include "enigma.h"
+
 
 using namespace std;
 
