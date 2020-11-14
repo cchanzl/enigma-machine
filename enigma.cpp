@@ -46,8 +46,7 @@ void read_input(int enigma_input[], int& input_length){
     };
     
     // convert string to integer if numeric and add to enigma_input
-    if ( c == 32 )enigma_input[count] = 99;
-    else enigma_input[count] = static_cast<int>(c) - 65;  
+    enigma_input[count] = static_cast<int>(c) - 65;  
 
     count++;
     
@@ -98,13 +97,14 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     //Assign to output array
     enigma_output[i] = output;    
   }
-  
+
+  /*
   //print output
   for ( int i = 0; i < input_length; i++){
     cout << enigma_output[i] << " ";
   }
   cout << endl;
-
+  */
   for ( int i = 0; i < input_length; i++){
     char letter = static_cast<char>(enigma_output[i] + 65); 
     cout << setw(2) << letter << " ";

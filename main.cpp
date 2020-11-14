@@ -14,19 +14,20 @@ int main (int argc, char** argv){
   // =========== SETTING PLUGBOARD ===========
   int pb_mapping[26];
 
+  /*
   // printing original plugboard settings
   cout << "The plugboard settings are: "<< endl;
   for ( int x = 0; x<26; x++) {
     pb_mapping[x] = x;
     cout << setw(2) << pb_mapping[x] << " ";
   }
-  cout << endl;
+  cout << endl;*/
 
   load_pb_setting(argv[1], pb_mapping);
-
+  /*
   // printing updated plugboard settings
   for ( int x = 0; x<26; x++) cout << setw(2) << pb_mapping[x] << " ";
-  cout << endl;
+  cout << endl;*/
 
   // =========== SETTING ROTORS ===========
   int number_of_rotors = argc-4;
@@ -37,33 +38,35 @@ int main (int argc, char** argv){
   Rotor* enigma_rotors = (Rotor*)malloc(sizeof(Rotor)*number_of_rotors);
   initialise_enigma_rotors(pos_array, enigma_rotors, number_of_rotors, argv);
   
-
   // =========== SETTING REFLECTORS ===========
   int rf_mapping[26];
+  /*
   // printing original plugboard settings
   cout << endl <<  "The reflector settings are:" << endl;
   for ( int x = 0; x<26; x++) {
     rf_mapping[x] = x;
     cout << setw(2) << rf_mapping[x] << " ";
   }
-  cout << endl;
+  cout << endl;*/
 
   load_rf_setting(argv[2], rf_mapping);
 
+  /*
   // printing updated reflector settings
   for ( int x = 0; x<26; x++) cout << setw(2) << rf_mapping[x] << " ";
-  cout << endl;
+  cout << endl;*/
 
   // =========== READING INPUT CHARACTERS ===========
   int input_length;
   int* enigma_input = new int[input_length];
   read_input(enigma_input, input_length);
 
+  /*
   // Print inputs into enigma machine
   for ( int x = 0; x<input_length; x++) {
     cout << setw(2) << enigma_input[x] << " ";
   }
-  cout << endl;
+  cout << endl;*/
   
   // =========== OUTPUT DECODED CHARACTERS ===========
   int enigma_output[input_length];
