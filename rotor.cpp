@@ -51,10 +51,12 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
     count++;
   }
 
-  if ( count != number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
+  // it is not ok if number of positions is lesser than number of rotors
+  if ( count < number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
     cout << "Error: Position config does not contain enough starting positions for the number of rotors specified." << endl;
     exit(NO_ROTOR_STARTING_POSITION);
-  }  
+  }
+
 
 }
 

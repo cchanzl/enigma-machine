@@ -24,10 +24,10 @@ int main (int argc, char** argv){
   cout << endl;*/
 
   load_pb_setting(argv[1], pb_mapping);
-  /*
+  
   // printing updated plugboard settings
   for ( int x = 0; x<26; x++) cout << setw(2) << pb_mapping[x] << " ";
-  cout << endl;*/
+  cout << endl;
 
   // =========== SETTING ROTORS ===========
   int number_of_rotors = argc-4;
@@ -48,13 +48,13 @@ int main (int argc, char** argv){
     cout << setw(2) << rf_mapping[x] << " ";
   }
   cout << endl;*/
-
+  
   load_rf_setting(argv[2], rf_mapping);
 
-  /*
+  
   // printing updated reflector settings
   for ( int x = 0; x<26; x++) cout << setw(2) << rf_mapping[x] << " ";
-  cout << endl;*/
+  cout << endl;
 
   // =========== READING INPUT CHARACTERS ===========
   int input_length;

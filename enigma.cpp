@@ -70,25 +70,29 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     output = pb_mapping[input];
 
     //Enter row of rotors from plugboard. Start from the right.
-    for ( int i = number_of_rotors - 1; i >= 0; i--){
+    if ( number_of_rotors > 0 ){ 
+      for ( int i = number_of_rotors - 1; i >= 0; i--){
 
-      // if not the rightmost rotor, check notch of right rotor and turn if at 12 o'clock
-      enigma_rotors[i].rotor_rotation(enigma_rotors, number_of_rotors, i);
-      /*
-      cout << input << " r " << i << " pos is ";
-      for ( int x = 0; x < 26; x++){
-	cout << setw(2) << enigma_rotors[i].input_mapping[x] << " ";
+	// if not the rightmost rotor, check notch of right rotor and turn if at 12 o'clock
+	enigma_rotors[i].rotor_rotation(enigma_rotors, number_of_rotors, i);
+	/*
+	  cout << input << " r " << i << " pos is ";
+	  for ( int x = 0; x < 26; x++){
+	  cout << setw(2) << enigma_rotors[i].input_mapping[x] << " ";
+	  }
+	  cout << endl;*/
+	output = enigma_rotors[i].right_to_left(output);
       }
-      cout << endl;*/
-      output = enigma_rotors[i].right_to_left(output);
     }
     
     //Enter reflector
     output = rf_mapping[output];
     
     //Enter set of rotors from reflector. Start from the left.
-    for ( int i = 0; i < number_of_rotors ; i++){
-      output = enigma_rotors[i].left_to_right(output);
+    if ( number_of_rotors > 0 ){
+      for ( int i = 0; i < number_of_rotors ; i++){
+	output = enigma_rotors[i].left_to_right(output);
+      }
     }
     
     //Scramble through Plugboard
@@ -107,7 +111,7 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
   */
   for ( int i = 0; i < input_length; i++){
     char letter = static_cast<char>(enigma_output[i] + 65); 
-    cout << setw(2) << letter << " ";
+    cout << letter;
   }
   cout << endl;
   
