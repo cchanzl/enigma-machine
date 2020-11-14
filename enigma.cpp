@@ -29,7 +29,7 @@ void search_array(int rotor_mapping[], int& output){
 
 // this function reads input from from the standard input stream into an array
 void read_input(int enigma_input[], int& input_length){
-  cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
+  //cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
 
   int LIMIT_LENGTH = 256;
   int count = 0;

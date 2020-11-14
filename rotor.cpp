@@ -32,7 +32,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cout << "Error: Position config contains non-numeric characters." << endl;
+	cout << "Non-numeric character in rotor positions file rotor.pos" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -158,7 +158,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cout << "Error: Rotor config contains non-numeric characters." << endl;
+	cout << "Non-numeric character for mapping in rotor file rotor.rot" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -193,7 +193,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   }
   
   if ( count < 26 ) {   // rotor setting must have at least 26 numbers
-    cout << "Error: Rotor config contains less than 26 numbers. " << endl;
+    cout << "Not all inputs mapped in rotor file: rotor.rot" << endl;
     exit(INVALID_ROTOR_MAPPING);
   }
   

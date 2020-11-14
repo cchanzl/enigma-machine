@@ -30,7 +30,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cout << "Error: Reflector setting contains non-numeric characters." << endl;
+	cout << "Non-numeric character in reflector file reflector.rf" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -65,7 +65,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   }
   
   if ( count != 26 ) {    // 26 because the last loop will increment count one more time
-    cout << "Error: Reflector does not contain 26 numbers. " << endl;
+    cout << "Insufficient number of mappings in reflector file: reflector.rf" << endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 

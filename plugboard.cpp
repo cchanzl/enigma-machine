@@ -29,7 +29,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cout << "Error: Plugboard setting contains non-numeric characters." << endl;
+	cout << "Non-numeric character in plugboard file plugboard.pb" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -63,7 +63,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     count++;
 
     if ( count > 26 ) {    // 26 because the last loop will increment count one more time
-      cout << "Error: Plugboard Setting contains more than 26 numbers. " << endl;
+      cout << "Incorrect number of paramters in plugboard file plugboard.pb" << endl;
       exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     }
     
