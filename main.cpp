@@ -34,7 +34,7 @@ int main (int argc, char** argv){
   int rf_mapping[26];
   load_rf_setting(argv[2], rf_mapping);
 
-  // =========== DECODING INPUT CHARACTERS ===========
+  // =========== ENCODING/DECODING INPUT CHARACTERS ===========
   enigma_machine(pb_mapping, rf_mapping, enigma_rotors, number_of_rotors);
   
   return 0;

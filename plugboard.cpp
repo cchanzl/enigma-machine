@@ -24,6 +24,8 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
   int count = 0;      // counts how many pb settings are defined
   string input;
 
+  
+  // cycles through each char in input and assign to plugboard array
   while(in >> input){
 
     // check if there are more than 26 parameters
@@ -62,7 +64,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( pb_setting[count] == pb_setting[i] ) {
-	cerr << "Error: Plugboard attempts to connect with more than one contact" << endl;
+	cerr << "Invalid mapping of " << pb_setting[count] << " (it is already mapped) in plugboard.pb" << endl;
 	exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
       }
     }
@@ -71,7 +73,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     
   }  
 
-  // check even number of settings
+  // check if there is an even number of settings
   if (count % 2 != 0) {
     cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
     exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS); 
@@ -90,5 +92,9 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     pb_mapping[pb_setting[i]] = pb_setting[i+1];
     pb_mapping[pb_setting[i+1]] = pb_setting[i];
   }
+
+  // closes ifstream
+  in.close();
+
   
 }

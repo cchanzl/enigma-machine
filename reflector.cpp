@@ -25,6 +25,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   int count = 0;      // counts how many rf settings are defined
   string input;
 
+  // cycles through each char in input and assign to reflector array
   while(in >> input){
 
     // check if there are more than 26 parameters
@@ -73,7 +74,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   }
 
 
-  // check even number of settings
+  // check if there is an even number of settings
   if (count % 2 != 0) {
     cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
@@ -92,5 +93,9 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     rf_mapping[rf_setting[i]] = rf_setting[i+1];
     rf_mapping[rf_setting[i+1]] = rf_setting[i];
   }
+
+  // closes ifstream
+  in.close();
+
   
 }

@@ -59,10 +59,14 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
   }
 
 
+  // closes ifstream
+  in.close();
+
 }
 
 // this function initialises enigma_rotors based on input parameters
 void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number_of_rotors, char* argv[]){
+
   // Initialise each Rotor from right (higher number) to left (lower number)
   for ( int i = number_of_rotors - 1; i >= 0; i--){
     enigma_rotors[i] = Rotor(argv[3+i], pos_array, i, number_of_rotors);
@@ -179,11 +183,21 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     }
     else rotor_mapping[count] = setting;
     
-    // check if number in first 26 position is repeated
+    // check if number for rotor mapping is repeated in first 26 positions
     if ( count < 26 ){
       for ( int i = 0; i < count; i++){
 	if ( rotor_mapping[count] == rotor_mapping[i] ) {
 	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ") in rotor.rot" << endl; 
+	  exit(INVALID_ROTOR_MAPPING);
+	}
+      }           
+    }
+
+    // check if number for notch is repeated in next 26 positions
+    else{
+      for ( int i = 0; i < count-26; i++){
+	if ( notch[count-26] == notch[i] ) {
+	  cerr << "notch is repeated" << endl; 
 	  exit(INVALID_ROTOR_MAPPING);
 	}
       }
@@ -193,15 +207,25 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
 
   }
   
-  if ( count < 26 ) {   // rotor setting must have at least 26 numbers
+  // rotor setting must have at least 26 numbers
+  if ( count < 26 ) {  
     cerr << "Not all inputs mapped in rotor file: rotor.rot" << endl;
     exit(INVALID_ROTOR_MAPPING);
   }
+
+  // rotor setting must have lesser than 52 numbers (first 26 for rotor mapping and next 26 for notches)
+  if ( count > 52 ) {  
+    cerr << "Too many inputs in rotor file: rotor.rot" << endl;
+    exit(INVALID_ROTOR_MAPPING);
+  }
+
   
-  
+  // closes ifstream
+  in.close();
+
 }
 
-//this member function scrambles input into a rotor entering from right to left
+// this member function scrambles input into a rotor entering from right to left
 int Rotor::right_to_left(int right_input){
 
   int left_output;
@@ -213,7 +237,7 @@ int Rotor::right_to_left(int right_input){
   return left_output;
 }
 
-//this member function scrambles input into a rotor entering from left to right
+// this member function scrambles input into a rotor entering from left to right
 int Rotor::left_to_right(int left_input){
 
   int right_output;
