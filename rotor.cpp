@@ -24,7 +24,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
   
-  int count = 0;      // counts how many rotor config are defined
+  int count = 0;      // counts how many rotor positions are defined
   string input;
 
   while(in >> input){
@@ -52,6 +52,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
   }
 
   // it is not ok if number of positions is lesser than number of rotors
+  // does not matter if number of posistions is larger than number of rotors since you can have 0 rotors with a non-zero config file
   if ( count < number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
     cerr << "No starting position for rotor " << count  << " in rotor position file: rotor.pos" << endl;
     exit(NO_ROTOR_STARTING_POSITION);
@@ -182,8 +183,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     if ( count < 26 ){
       for ( int i = 0; i < count; i++){
 	if ( rotor_mapping[count] == rotor_mapping[i] ) {
-	  //cout << "Error: Rotor config attempts to map more than one input to the same output";
-	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ") in" << endl; 
+	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ") in rotor.rot" << endl; 
 	  exit(INVALID_ROTOR_MAPPING);
 	}
       }
