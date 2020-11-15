@@ -32,7 +32,7 @@ void check_command_line(int argc, char* argv[]){
 
   // check for at least 4 command line arguments
   if ( argc < 4 ) {
-    cout << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions";
+    cout << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions ";
     exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
   }
 
