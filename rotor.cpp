@@ -32,7 +32,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cerr << "Non-numeric character in rotor positions file rotor.pos";
+	cerr << "Non-numeric character in rotor positions file rotor.pos" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -42,7 +42,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cerr << "Error: Position config contains a number not between 0 and 25";
+      cerr << "Error: Position config contains a number not between 0 and 25" << endl;
       exit(INVALID_INDEX);
     }
 
@@ -53,7 +53,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 
   // it is not ok if number of positions is lesser than number of rotors
   if ( count < number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
-    cerr << "No starting position for rotor " << count  << " in rotor position file: rotor.pos";
+    cerr << "No starting position for rotor " << count  << " in rotor position file: rotor.pos" << endl;
     exit(NO_ROTOR_STARTING_POSITION);
   }
 
@@ -141,7 +141,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   // loading internal rotor config into rotor_mapping
   ifstream in(filename);
   if (!in) {
-    cerr << "Error: Unable to open or read configuration files";
+    cerr << "Error: Unable to open or read configuration files" << endl;
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
   
@@ -158,7 +158,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cerr << "Non-numeric character for mapping in rotor file rotor.rot";
+	cerr << "Non-numeric character for mapping in rotor file rotor.rot" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -168,7 +168,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cerr << "Error: Rotor config contains a number not between 0 and 25";
+      cerr << "Error: Rotor config contains a number not between 0 and 25" << endl;
       exit(INVALID_INDEX);
     }
     
@@ -183,7 +183,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
       for ( int i = 0; i < count; i++){
 	if ( rotor_mapping[count] == rotor_mapping[i] ) {
 	  //cout << "Error: Rotor config attempts to map more than one input to the same output";
-	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ")"; 
+	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ")" << endl; 
 	  exit(INVALID_ROTOR_MAPPING);
 	}
       }
@@ -194,7 +194,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   }
   
   if ( count < 26 ) {   // rotor setting must have at least 26 numbers
-    cerr << "Not all inputs mapped in rotor file: rotor.rot";
+    cerr << "Not all inputs mapped in rotor file: rotor.rot" << endl;
     exit(INVALID_ROTOR_MAPPING);
   }
   

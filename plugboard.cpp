@@ -17,7 +17,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
   // loading plugboard settings into pb_setting
   ifstream in(filename);
   if (!in) {
-    cerr << "Error: Unable to open or read configuration files";
+    cerr << "Error: Unable to open or read configuration files" << endl;
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
 
@@ -29,7 +29,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cerr << "Non-numeric character in plugboard file plugboard.pb";
+	cerr << "Non-numeric character in plugboard file plugboard.pb" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -39,7 +39,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cerr << "Error: Plugboard setting contains a number not between 0 and 25";
+      cerr << "Error: Plugboard setting contains a number not between 0 and 25" << endl;
       exit(INVALID_INDEX);
     }
     
@@ -48,14 +48,14 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     
     // check if plugboard connects with itself
     if ( count % 2 != 0 && pb_setting[count - 1] == pb_setting[count] ){
-      cerr << "Error: Plugboard attempts to connect a contact with itself";
+      cerr << "Error: Plugboard attempts to connect a contact with itself" << endl;
       exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
     }
 
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( pb_setting[count] == pb_setting[i] ) {
-	cerr << "Error: Plugboard attempts to connect with more than one contact";
+	cerr << "Error: Plugboard attempts to connect with more than one contact" << endl;
 	exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
       }
     }
@@ -64,7 +64,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
 
     // while loop will exit if count == 27
     if ( count == 27 ) {
-      cerr << "Incorrect number of parameters in plugboard file plugboard.pb";
+      cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
       exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     }
     
@@ -72,7 +72,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
 
   // check even number of settings
   if (count % 2 != 0) {
-    cerr << "Incorrect number of parameters in plugboard file plugboard.pb";
+    cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
     exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS); 
   }
   

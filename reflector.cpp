@@ -18,7 +18,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   // loading reflector settings into rf_setting
   ifstream in(filename);
   if (!in) {
-    cerr << "Error: Unable to open or read configuration files";
+    cerr << "Error: Unable to open or read configuration files" << endl;
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
 
@@ -29,7 +29,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
 
     // check if there are more than 26 parameters
     if ( count > 26 ){
-      cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf";
+      cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
       exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
     }
 
@@ -37,7 +37,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cerr << "Non-numeric character in reflector file reflector.rf";
+	cerr << "Non-numeric character in reflector file reflector.rf" << endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -47,7 +47,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cerr << "Error: Reflector setting contains a number not between 0 and 25";
+      cerr << "Error: Reflector setting contains a number not between 0 and 25" << endl;
       exit(INVALID_INDEX);
     }
     
@@ -56,14 +56,14 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check if plugboard connects with itself
     if ( count % 2 != 0 && rf_setting[count - 1] == rf_setting[count] ){
-      cerr << "Error: Reflector attempts to connect a contact with itself";
+      cerr << "Error: Reflector attempts to connect a contact with itself" << endl;
       exit(INVALID_REFLECTOR_MAPPING);
     }
 
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( rf_setting[count] == rf_setting[i] ) {
-	cerr << "Error: Reflector attempts to connect with more than one contact";
+	cerr << "Error: Reflector attempts to connect with more than one contact" << endl;
 	exit(INVALID_REFLECTOR_MAPPING);
       }
     }
@@ -75,13 +75,13 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
 
   // check even number of settings
   if (count % 2 != 0) {
-    cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf";
+    cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
   }
 
   // check if there are lesser than 26 parameters
   if ( count < 26 ) {    // 26 because the last loop will increment count one more time
-    cerr << "Insufficient number of parameters in reflector file: reflector.rf";
+    cerr << "Insufficient number of parameters in reflector file: reflector.rf" << endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 

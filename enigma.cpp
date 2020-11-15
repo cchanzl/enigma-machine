@@ -57,7 +57,7 @@ void read_input(int enigma_input[], int& input_length){
   
     // to check if input is from A to Z
     if ( c < 65 || c > 90){
-      cerr << c << " is not a valid input character (input characters must be upper case letters A-Z)!";
+      cerr << c << " is not a valid input character (input characters must be upper case letters A-Z)!" << endl;
       exit(INVALID_INPUT_CHARACTER);
     };
     
