@@ -32,7 +32,7 @@ void check_command_line(int argc, char* argv[]){
 
   // check for at least 4 command line arguments
   if ( argc < 4 ) {
-    cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions ";
+    cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions";
     exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
   }
 
@@ -57,7 +57,7 @@ void read_input(int enigma_input[], int& input_length){
   
     // to check if input is from A to Z
     if ( c < 65 || c > 90){
-      cerr << c << " is not a valid input character (input characters must be upper case letters A-Z)! ";
+      cerr << c << " is not a valid input character (input characters must be upper case letters A-Z)!";
       exit(INVALID_INPUT_CHARACTER);
     };
     
