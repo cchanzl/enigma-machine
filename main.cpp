@@ -33,9 +33,10 @@ int main (int argc, char** argv){
   int number_of_rotors = argc-4;
   int pos_array[number_of_rotors];    // argc-4 = number of rotors
   load_rotor_pos(argv[argc-1], pos_array, number_of_rotors);
-
+  
   // Source: https://www.geeksforgeeks.org/how-to-initialize-array-of-objects-with-parameterized-constructors-in-c/
-  Rotor* enigma_rotors = (Rotor*)malloc(sizeof(Rotor)*number_of_rotors);
+  //Rotor* enigma_rotors = (Rotor*)malloc(sizeof(Rotor)*number_of_rotors);
+  Rotor enigma_rotors[number_of_rotors];
   initialise_enigma_rotors(pos_array, enigma_rotors, number_of_rotors, argv);
   
   // =========== SETTING REFLECTORS ===========
@@ -58,21 +59,12 @@ int main (int argc, char** argv){
   */
   // =========== READING INPUT CHARACTERS ===========
   int input_length;
-  int* enigma_input = new int[input_length];
+  int enigma_input[256];
   read_input(enigma_input, input_length);
-
-  /*
-  // Print inputs into enigma machine
-  for ( int x = 0; x<input_length; x++) {
-    cout << setw(2) << enigma_input[x] << " ";
-  }
-  cout << endl;*/
   
   // =========== OUTPUT DECODED CHARACTERS ===========
   int enigma_output[input_length];
   enigma_machine(enigma_input, input_length, pb_mapping, rf_mapping, enigma_rotors, number_of_rotors, enigma_output);
-  
-  delete [] enigma_input;
   
   return 0;
 }
