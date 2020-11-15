@@ -18,7 +18,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   // loading reflector settings into rf_setting
   ifstream in(filename);
   if (!in) {
-    cout << "Error: Unable to open or read configuration files." << endl;
+    cout << "Error: Unable to open or read configuration files";
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
 
@@ -30,7 +30,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cout << "Non-numeric character in reflector file reflector.rf" << endl;
+	cout << "Non-numeric character in reflector file reflector.rf";
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -40,7 +40,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cout << "Error: Reflector setting contains a number not between 0 and 25." << endl;
+      cout << "Error: Reflector setting contains a number not between 0 and 25";
       exit(INVALID_INDEX);
     }
     
@@ -49,14 +49,14 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check if plugboard connects with itself
     if ( count % 2 != 0 && rf_setting[count - 1] == rf_setting[count] ){
-      cout << "Error: Reflector attempts to connect a contact with itself." << endl;
+      cout << "Error: Reflector attempts to connect a contact with itself";
       exit(INVALID_REFLECTOR_MAPPING);
     }
 
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( rf_setting[count] == rf_setting[i] ) {
-	cout << "Error: Reflector attempts to connect with more than one contact." << endl;
+	cout << "Error: Reflector attempts to connect with more than one contact";
 	exit(INVALID_REFLECTOR_MAPPING);
       }
     }
@@ -65,7 +65,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   }
   
   if ( count != 26 ) {    // 26 because the last loop will increment count one more time
-    cout << "Insufficient number of mappings in reflector file: reflector.rf" << endl;
+    cout << "Insufficient number of mappings in reflector file: reflector.rf";
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 

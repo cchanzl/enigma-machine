@@ -41,7 +41,7 @@ void read_input(int enigma_input[], int& input_length){
     // to check if input is from A to Z
     if ( c < 65 || c > 90){
       if ( c == 32 ) continue;
-      cout << "Error: Input contains invalid characters." << endl;
+      cout << "Error: Input contains invalid characters";
       exit(INVALID_INPUT_CHARACTER);
     };
     
@@ -50,7 +50,7 @@ void read_input(int enigma_input[], int& input_length){
 
     count++;
     
-    if ( count-1 == LIMIT_LENGTH ) cout << "Error: Message is longer than 256 char." << endl;
+    if ( count-1 == LIMIT_LENGTH ) cout << "Error: Message is longer than 256 char";
     
     }
 
@@ -106,7 +106,6 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     char letter = static_cast<char>(enigma_output[i] + 65); 
     cout << letter;
   }
-  //cout << " " << endl;
   
 }
 
