@@ -27,6 +27,23 @@ void search_array(int rotor_mapping[], int& output){
 
 // ========== functions that are not member of any user defined class ==========
 
+// this function checks that the command line arguments are of the right format
+void check_command_line(int argc, char* argv[]){
+
+  // check for at least 4 command line arguments
+  if ( argc < 4 ) {
+    cout << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions";
+    exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
+  }
+
+  // check first argument
+  string arg_1 = "./enigma";
+  if ( argv[0] != arg_1) cout << "Incorrect command line arguments" << endl; 
+  
+
+}
+
+
 // this function reads input from from the standard input stream into an array
 void read_input(int enigma_input[], int& input_length){
   //cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
@@ -40,8 +57,7 @@ void read_input(int enigma_input[], int& input_length){
   
     // to check if input is from A to Z
     if ( c < 65 || c > 90){
-      if ( c == 32 ) continue;
-      cout << "Error: Input contains invalid characters";
+      cout << c << " is not a valid input character (input characters must be upper case letters A-Z)!";
       exit(INVALID_INPUT_CHARACTER);
     };
     
@@ -69,7 +85,7 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     //Scramble through Plugboard
     output = pb_mapping[input];
 
-    //Enter row of rotors from plugboard. Start from the right.
+    //Enter row of rotors from plugboard. Start from the right. Does not enter for loop if number_of_rotors = 0.
     if ( number_of_rotors > 0 ){ 
       for ( int i = number_of_rotors - 1; i >= 0; i--){
 
@@ -88,7 +104,7 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     //Enter reflector
     output = rf_mapping[output];
     
-    //Enter set of rotors from reflector. Start from the left.
+    //Enter set of rotors from reflector. Start from the left. Does not enter for loop if number_of_rotors = 0.
     if ( number_of_rotors > 0 ){
       for ( int i = 0; i < number_of_rotors ; i++){
 	output = enigma_rotors[i].left_to_right(output);

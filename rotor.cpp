@@ -60,7 +60,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 
 }
 
-// this function initialise enigma_rotors based on input parameters
+// this function initialises enigma_rotors based on input parameters
 void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number_of_rotors, char* argv[]){
   // Initialise each Rotor from right (higher number) to left (lower number)
   for ( int i = number_of_rotors - 1; i >= 0; i--){
@@ -79,7 +79,7 @@ void Rotor::rotor_rotation(Rotor enigma_rotors[], int number_of_rotors, int roto
   if ( rotor_num == number_of_rotors - 1) rotate_rotor();
   else {
     for ( int n = 0; n < 26; n++){
-      if ( enigma_rotors[rotor_num+1].notch[n] == enigma_rotors[rotor_num+1].input_mapping[25]) rotate_rotor();
+      if ( enigma_rotors[rotor_num+1].notch[n] == enigma_rotors[rotor_num+1].input_mapping[0]) rotate_rotor();
     }
   }
 }

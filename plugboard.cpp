@@ -25,8 +25,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
   string input;
 
   while(in >> input){
-    if ( count == 26 ) break;
-    
+      
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
@@ -63,9 +62,9 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     
     count++;
 
-    // while loop will break if count == 26
-    if ( count > 25 ) {
-      cout << "Incorrect number of paramters in plugboard file plugboard.pb";
+    // while loop will exit if count == 27
+    if ( count == 27 ) {
+      cout << "Incorrect number of parameters in plugboard file plugboard.pb";
       exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     }
     

@@ -11,37 +11,28 @@ using namespace std;
 
 int main (int argc, char** argv){
 
+  // =========== CHECK COMMAND LINE ARGUMENTS ===========
+  check_command_line(argc, argv);
+
   // =========== SETTING PLUGBOARD ===========
   int pb_mapping[26];
-
-  /*
-  // printing original plugboard settings
-  cout << "The plugboard settings are: "<< endl;
-  for ( int x = 0; x<26; x++) {
-    pb_mapping[x] = x;
-    cout << setw(2) << pb_mapping[x] << " ";
-  }
-  cout << endl;*/
-
   load_pb_setting(argv[1], pb_mapping);
-  /*
-  // printing updated plugboard settings
-  for ( int x = 0; x<26; x++) cout << setw(2) << pb_mapping[x] << " ";
-  cout << endl;
-  */
+  
   // =========== SETTING ROTORS ===========
   int number_of_rotors = argc-4;
-  int pos_array[number_of_rotors];    // argc-4 = number of rotors
+
+  // rotor position array will always be one larger than the number of rotors to initialise an array of 1 when there are 0 rotors
+  int pos_array[number_of_rotors+1];
   load_rotor_pos(argv[argc-1], pos_array, number_of_rotors);
-  
-  // Source: https://www.geeksforgeeks.org/how-to-initialize-array-of-objects-with-parameterized-constructors-in-c/
-  //Rotor* enigma_rotors = (Rotor*)malloc(sizeof(Rotor)*number_of_rotors);
-  Rotor enigma_rotors[number_of_rotors];
+
+
+  // rotor array will always be one larger than the number of rotors to initialise an array of 1 when there are 0 rotors  
+  Rotor enigma_rotors[number_of_rotors+1];
   initialise_enigma_rotors(pos_array, enigma_rotors, number_of_rotors, argv);
   
   // =========== SETTING REFLECTORS ===========
   int rf_mapping[26];
-    load_rf_setting(argv[2], rf_mapping);
+  load_rf_setting(argv[2], rf_mapping);
 
   // =========== READING INPUT CHARACTERS ===========
   int input_length;

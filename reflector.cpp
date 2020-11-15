@@ -27,6 +27,13 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
 
   while(in >> input){
 
+    // check if there are more than 26 parameters
+    if ( count > 26 ){
+      cout << "Incorrect (odd) number of parameters in reflector file reflector.rf";
+      exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
+    }
+
+    
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
@@ -62,10 +69,19 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
     }
     
     count++;
+    
   }
-  
-  if ( count != 26 ) {    // 26 because the last loop will increment count one more time
-    cout << "Insufficient number of mappings in reflector file: reflector.rf";
+
+
+  // check even number of settings
+  if (count % 2 != 0) {
+    cout << "Incorrect (odd) number of parameters in reflector file reflector.rf";
+    exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
+  }
+
+  // check if there are lesser than 26 parameters
+  if ( count < 26 ) {    // 26 because the last loop will increment count one more time
+    cout << "Insufficient number of parameters in reflector file: reflector.rf";
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 
