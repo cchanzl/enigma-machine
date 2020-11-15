@@ -41,22 +41,8 @@ int main (int argc, char** argv){
   
   // =========== SETTING REFLECTORS ===========
   int rf_mapping[26];
-  /*
-  // printing original plugboard settings
-  cout << endl <<  "The reflector settings are:" << endl;
-  for ( int x = 0; x<26; x++) {
-    rf_mapping[x] = x;
-    cout << setw(2) << rf_mapping[x] << " ";
-  }
-  cout << endl;*/
-  
-  load_rf_setting(argv[2], rf_mapping);
+    load_rf_setting(argv[2], rf_mapping);
 
-  /*
-  // printing updated reflector settings
-  for ( int x = 0; x<26; x++) cout << setw(2) << rf_mapping[x] << " ";
-  cout << endl;
-  */
   // =========== READING INPUT CHARACTERS ===========
   int input_length;
   int enigma_input[256];

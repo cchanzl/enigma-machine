@@ -102,18 +102,12 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     enigma_output[i] = output;    
   }
 
-  /*
-  //print output
-  for ( int i = 0; i < input_length; i++){
-    cout << enigma_output[i] << " ";
-  }
-  cout << endl;
-  */
   for ( int i = 0; i < input_length; i++){
     char letter = static_cast<char>(enigma_output[i] + 65); 
     cout << letter;
   }
   cout << " " << endl;
+  cout << endl;
   
 }
 

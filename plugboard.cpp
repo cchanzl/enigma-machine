@@ -25,7 +25,8 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
   string input;
 
   while(in >> input){
-
+    if ( count == 26 ) break;
+    
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
@@ -62,7 +63,8 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     
     count++;
 
-    if ( count > 26 ) {    // 26 because the last loop will increment count one more time
+    // while loop will break if count == 26
+    if ( count > 25 ) {
       cout << "Incorrect number of paramters in plugboard file plugboard.pb" << endl;
       exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     }
@@ -71,7 +73,7 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
 
   // check even number of settings
   if (count % 2 != 0) {
-    cout << "Error: Plugboard setting contains an odd number of numbers." << endl;
+    cout << "Incorred number of parameters in plugboard file plugboard.pb" << endl;
     exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS); 
   }
   
