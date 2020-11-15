@@ -183,7 +183,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
       for ( int i = 0; i < count; i++){
 	if ( rotor_mapping[count] == rotor_mapping[i] ) {
 	  //cout << "Error: Rotor config attempts to map more than one input to the same output";
-	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ")" << endl; 
+	  cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ") in" << endl; 
 	  exit(INVALID_ROTOR_MAPPING);
 	}
       }

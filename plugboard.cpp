@@ -25,7 +25,14 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
   string input;
 
   while(in >> input){
-      
+
+    // check if there are more than 26 parameters
+    if ( count == 26 ) {
+      cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
+      exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
+    }
+
+    
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
@@ -61,12 +68,6 @@ void load_pb_setting(const char* filename, int pb_mapping[26]){
     }
     
     count++;
-
-    // while loop will exit if count == 27
-    if ( count == 27 ) {
-      cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
-      exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
-    }
     
   }  
 

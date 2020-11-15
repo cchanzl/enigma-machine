@@ -28,7 +28,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
   while(in >> input){
 
     // check if there are more than 26 parameters
-    if ( count > 26 ){
+    if ( count == 26 ){
       cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
       exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
     }
@@ -81,7 +81,7 @@ void load_rf_setting(const char* filename, int rf_mapping[26]){
 
   // check if there are lesser than 26 parameters
   if ( count < 26 ) {    // 26 because the last loop will increment count one more time
-    cerr << "Insufficient number of parameters in reflector file: reflector.rf" << endl;
+    cerr << "Insufficient number of mappings in reflector file: reflector.rf" << endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 
