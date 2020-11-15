@@ -34,14 +34,8 @@ int main (int argc, char** argv){
   int rf_mapping[26];
   load_rf_setting(argv[2], rf_mapping);
 
-  // =========== READING INPUT CHARACTERS ===========
-  int input_length;
-  int enigma_input[256];
-  read_input(enigma_input, input_length);
-  
-  // =========== OUTPUT DECODED CHARACTERS ===========
-  int enigma_output[input_length];
-  enigma_machine(enigma_input, input_length, pb_mapping, rf_mapping, enigma_rotors, number_of_rotors, enigma_output);
+  // =========== DECODING INPUT CHARACTERS ===========
+  enigma_machine(pb_mapping, rf_mapping, enigma_rotors, number_of_rotors);
   
   return 0;
 }
