@@ -106,8 +106,7 @@ void enigma_machine( int enigma_input[], int input_length, int pb_mapping[], int
     char letter = static_cast<char>(enigma_output[i] + 65); 
     cout << letter;
   }
-  cout << " " << endl;
-  cout << endl;
+  //cout << " " << endl;
   
 }
 
