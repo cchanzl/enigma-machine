@@ -2,13 +2,12 @@
 #define PLUGBOARD_H
 
 class Plugboard{
-  //int pb_mapping[26];
+  int pb_mapping[26];
 
   void load_pb_setting(const char* filename, int pb_mapping[26]);
 
  public:
-  int pb_mapping[26];
-
+  
   Plugboard(const char* filename){
     load_pb_setting(filename, pb_mapping);
   }

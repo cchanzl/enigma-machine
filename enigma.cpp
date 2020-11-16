@@ -58,15 +58,8 @@ void decoder_encoder( int input, Plugboard plugboard, Reflector reflector, Rotor
   //Enter row of rotors from plugboard. Start from the right. Does not enter for loop if number_of_rotors = 0.
   if ( number_of_rotors > 0 ){ 
     for ( int i = number_of_rotors - 1; i >= 0; i--){
-
       // if not the rightmost rotor, check notch of right rotor and turn if at 12 o'clock
       enigma_rotors[i].rotor_rotation(enigma_rotors, number_of_rotors, i);
-      /*
-	cout << input << " r " << i << " pos is ";
-	for ( int x = 0; x < 26; x++){
-	cout << setw(2) << enigma_rotors[i].input_mapping[x] << " ";
-	}
-	cout << endl;*/
       output = enigma_rotors[i].right_to_left(output);
     }
   }
@@ -111,7 +104,7 @@ void enigma_machine(Plugboard plugboard, Reflector reflector, Rotor enigma_rotor
     // decode/endocde input
     decoder_encoder(c, plugboard, reflector, enigma_rotors, number_of_rotors);
     
-      }
+  }
     
 }
 
