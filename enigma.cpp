@@ -3,7 +3,8 @@
 #include <fstream>
 #include <string>
 
-#include "rotor.h"    // necessary as Rotor class is used as an arguement below
+#include "rotor.h"     // necessary as Rotor class is used as an arguement below
+#include "reflector.h" // necessary as Reflector class is used as an argument below
 #include "enigma.h"
 #include "errors.h"
 
@@ -44,7 +45,7 @@ void check_command_line(int argc, char* argv[]){
 }
 
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
-void decoder_encoder( int input, int pb_mapping[], int rf_mapping[26], Rotor enigma_rotors[], int number_of_rotors){
+void decoder_encoder( int input, int pb_mapping[], Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
 
   int output = 0;
     
@@ -68,7 +69,7 @@ void decoder_encoder( int input, int pb_mapping[], int rf_mapping[26], Rotor eni
   }
     
   //Enter reflector
-  output = rf_mapping[output];
+  output = reflector.reflector_output(output);
     
   //Enter set of rotors from reflector. Start from the left. Does not enter for loop if number_of_rotors = 0.
   if ( number_of_rotors > 0 ){
@@ -90,7 +91,7 @@ void decoder_encoder( int input, int pb_mapping[], int rf_mapping[26], Rotor eni
 
 
 // this function reads input from from the standard input stream into an array
-void enigma_machine(int pb_mapping[], int rf_mapping[26], Rotor enigma_rotors[], int number_of_rotors){
+void enigma_machine(int pb_mapping[], Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
   //cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
 
   string input;
@@ -108,7 +109,7 @@ void enigma_machine(int pb_mapping[], int rf_mapping[26], Rotor enigma_rotors[],
     c = static_cast<int>(c) - 65;  
 
     // decode/endocde input
-    decoder_encoder(c, pb_mapping, rf_mapping, enigma_rotors, number_of_rotors);
+    decoder_encoder(c, pb_mapping, reflector, enigma_rotors, number_of_rotors);
     
       }
     

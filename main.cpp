@@ -30,12 +30,11 @@ int main (int argc, char** argv){
   Rotor enigma_rotors[number_of_rotors+1];
   initialise_enigma_rotors(pos_array, enigma_rotors, number_of_rotors, argv);
   
-  // =========== SETTING REFLECTORS ===========
-  int rf_mapping[26];
-  load_rf_setting(argv[2], rf_mapping);
+  // =========== SETTING REFLECTOR ===========
+  Reflector reflector = Reflector(argv[2]);
 
   // =========== ENCODING/DECODING INPUT CHARACTERS ===========
-  enigma_machine(pb_mapping, rf_mapping, enigma_rotors, number_of_rotors);
+  enigma_machine(pb_mapping, reflector, enigma_rotors, number_of_rotors);
   
   return 0;
 }

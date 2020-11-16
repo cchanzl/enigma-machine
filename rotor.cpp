@@ -4,7 +4,8 @@
 #include <string>
 
 #include "rotor.h"
-#include "enigma.h"
+#include "reflector.h"  // necessary because enigma.h references Reflector class
+#include "enigma.h"     // necessary because search_array() is used below
 #include "errors.h"
 
 
@@ -69,7 +70,7 @@ void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number
 
   // Initialise each Rotor from right (higher number) to left (lower number)
   for ( int i = number_of_rotors - 1; i >= 0; i--){
-    enigma_rotors[i] = Rotor(argv[3+i], pos_array, i, number_of_rotors);
+    enigma_rotors[i] = Rotor(argv[3+i], pos_array, i);
     //enigma_rotors[i].print_rotor_setting();
   }
 }

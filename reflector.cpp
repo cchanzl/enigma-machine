@@ -8,11 +8,15 @@
 
 using namespace std;
 
+// this function scrambles input through the reflector
+int Reflector::reflector_output(int input){
+  int output;
+  return output = rf_mapping[input];
+}
 
-// ========== functions that are not member of any user defined class ==========
 
 // this function loads the reflector settings from the parameters provided
-void load_rf_setting(const char* filename, int rf_mapping[26]){
+void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
  int rf_setting[26];
   
   // loading reflector settings into rf_setting

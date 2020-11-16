@@ -18,7 +18,7 @@ class Rotor{
  
   // default constructor. Note that rotor_pos starts from 0 for the left most rotor.
   Rotor(){};
-  Rotor(const char*filename, const int pos_array[], const int rotor_pos, const int number_of_rotors){  
+  Rotor(const char*filename, const int pos_array[], const int rotor_pos){  
     load_rotor_setting(filename, pos_array, rotor_pos);
     this -> rotor_pos = rotor_pos;
   }
