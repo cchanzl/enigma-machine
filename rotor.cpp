@@ -5,6 +5,7 @@
 
 #include "rotor.h"
 #include "reflector.h"  // necessary because enigma.h references Reflector class
+#include "plugboard.h"  // necessary because enigma.h references Plugboard class
 #include "enigma.h"     // necessary because search_array() is used below
 #include "errors.h"
 
@@ -233,7 +234,7 @@ int Rotor::right_to_left(int right_input){
 
   left_output = input_mapping[right_input];
   left_output = rotor_mapping[left_output];
-  search_array(input_mapping, left_output);
+  left_output = search_array(input_mapping, left_output);
  
   return left_output;
 }
@@ -244,8 +245,8 @@ int Rotor::left_to_right(int left_input){
   int right_output;
 
   right_output = input_mapping[left_input];
-  search_array(rotor_mapping, right_output);
-  search_array(input_mapping, right_output);
+  right_output = search_array(rotor_mapping, right_output);
+  right_output = search_array(input_mapping, right_output);
   
   return right_output;
 }

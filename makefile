@@ -13,7 +13,7 @@ rotor.o: rotor.cpp rotor.h enigma.h reflector.h errors.h
 reflector.o: reflector.cpp reflector.h enigma.h errors.h
 	g++ -Wall -g -c reflector.cpp
 
-plugboard.o: plugboard.cpp plugboard.h errors.h
+plugboard.o: plugboard.cpp plugboard.h enigma.h errors.h
 	g++ -Wall -g -c plugboard.cpp
 
 

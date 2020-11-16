@@ -15,8 +15,7 @@ int main (int argc, char** argv){
   check_command_line(argc, argv);
 
   // =========== SETTING PLUGBOARD ===========
-  int pb_mapping[26];
-  load_pb_setting(argv[1], pb_mapping);
+  Plugboard plugboard = Plugboard(argv[1]);
   
   // =========== SETTING ROTORS ===========
   int number_of_rotors = argc-4;
@@ -34,7 +33,7 @@ int main (int argc, char** argv){
   Reflector reflector = Reflector(argv[2]);
 
   // =========== ENCODING/DECODING INPUT CHARACTERS ===========
-  enigma_machine(pb_mapping, reflector, enigma_rotors, number_of_rotors);
+  enigma_machine(plugboard, reflector, enigma_rotors, number_of_rotors);
   
   return 0;
 }

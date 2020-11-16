@@ -4,13 +4,28 @@
 #include <string>
 
 #include "plugboard.h"
+#include "rotor.h"
+#include "reflector.h"
+#include "enigma.h"
 #include "errors.h"
 
 
 using namespace std;
 
+// this function scrambles input through the plugboard from right to left
+int Plugboard::right_to_left(int input){
+  return pb_mapping[input];
+}
+
+
+// this function scrambles input through the plugboard from left to right
+int Plugboard::left_to_right(int input){
+  return search_array(pb_mapping, input);
+}
+
+
 // this function loads the plugboard settings from parameters provided
-void load_pb_setting(const char* filename, int pb_mapping[26]){
+void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
 
   int pb_setting[26];
   
