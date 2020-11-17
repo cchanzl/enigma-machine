@@ -18,7 +18,7 @@ class Rotor{
  
   // default constructor. Note that rotor_pos starts from 0 for the left most rotor.
   Rotor(){};
-  Rotor(const char*filename, const int pos_array[], const int rotor_pos){  
+  Rotor(const char*filename, const int pos_array[], const int rotor_pos){   
     load_rotor_setting(filename, pos_array, rotor_pos);
     this -> rotor_pos = rotor_pos;
   }
@@ -42,7 +42,7 @@ class Rotor{
 void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors);
 
 // initialises a *group* of rotors when the objects are first created
-void initialise_enigma_rotors(int pos_array[], Rotor enigma_rotors[], int number_of_rotors, char* argv[]);
+void initialise_enigma_rotors(Rotor enigma_rotors[], int number_of_rotors, char* argv[]);
 
 
 #endif

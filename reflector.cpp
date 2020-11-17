@@ -32,9 +32,9 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
   // cycles through each char in input and assign to reflector array
   while(in >> input){
 
-    // check if there are more than 26 parameters
+    // check if there are 27 parameters in reflector.rf
     if ( count == 26 ){
-      cerr << "There are more than 26 parameters in reflector file reflector.rf" << endl;
+      cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
       exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
     }
 
