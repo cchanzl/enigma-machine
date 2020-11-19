@@ -21,7 +21,7 @@ public:
     : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc-4){};
 
   // this reads input from the standard input stream and calls decoder_encoder(). It takes the key components of the enigma machine as arguments.
-  void encrypt(Rotor enigma_rotors[]);
+  void encrypt(Rotor* enigma_rotors);
   
   
 };

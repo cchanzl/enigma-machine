@@ -43,7 +43,7 @@ void check_command_line(int argc, char* argv[]){
 }
 
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
-void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
+void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor* enigma_rotors, int number_of_rotors){
 
   int output = 0;
     
@@ -79,13 +79,14 @@ void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflec
 
 
 // this function reads input from from the standard input stream into an array
-void Enigma::encrypt(Rotor enigma_rotors[]){
+void Enigma::encrypt(Rotor* enigma_rotors){
 
   char character;
   while ( std::cin >> std::ws >> character){
     
     // to check if input is from A to Z
-    if ( character < 65 || character > 90){
+    //if ( character < 65 || character > 90){
+    if( !isalpha(character) || !isupper(character)  ){
       std::cerr << character << " is not a valid input character (input characters must be upper case letters A-Z)!" << std::endl;
       exit(INVALID_INPUT_CHARACTER);
     }

@@ -40,7 +40,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check for non-numeric characters
     for(char& c : input) {
-      if ( c < 48 || c > 57){
+      if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in reflector file reflector.rf" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 

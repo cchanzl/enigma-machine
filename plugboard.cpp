@@ -47,7 +47,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     
     // check for non-numeric characters
     for(char& c : input) {
-      if ( c < 48 || c > 57){
+      if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in plugboard file plugboard.pb" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 

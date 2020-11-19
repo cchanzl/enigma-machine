@@ -28,7 +28,7 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
 
     // check for non-numeric characters
     for(char& c : input) {
-      if ( c < '0' || c > '9'){
+      if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in rotor positions file rotor.pos" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
@@ -37,7 +37,7 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
     // convert string to integer if numeric
     int setting = stoi(input, nullptr, 10);
     
-    // check if a is a valid index
+    // check if it is a valid index
     if ( setting < 0 || setting > 25 ) {
       std::cerr << "Error: Position config contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
@@ -64,14 +64,15 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
 // this function initialises enigma_rotors based on input parameters
 void initialise_enigma_rotors(Rotor enigma_rotors[], const int number_of_rotors, char* argv[]){
 
-  // rotor position array will always be one larger than the number of rotors to initialise an array of 1 when there are 0 rotors
-  int pos_array[number_of_rotors+1];
-  load_rotor_pos(argv[number_of_rotors+4-1], pos_array, number_of_rotors);
-
+  int fixed_starting_argv = 3;
+  
+  // Initialise array containing each rotor's starting position
+  int pos_array[number_of_rotors];
+  load_rotor_pos(argv[number_of_rotors + fixed_starting_argv], pos_array, number_of_rotors);
   
   // Initialise each Rotor from right (higher number) to left (lower number)
   for ( int i = number_of_rotors - 1; i >= 0; i--){
-    enigma_rotors[i] = Rotor(argv[3+i], pos_array, i);
+    enigma_rotors[i] = Rotor(argv[fixed_starting_argv+i], pos_array, i);
   }
 }
 
@@ -140,7 +141,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
 
     // check for non-numeric characters
     for(char& c : input) {
-      if ( c < 48 || c > 57){
+      if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character for mapping in rotor file rotor.rot" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
@@ -149,7 +150,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     // convert string to integer if numeric
     int setting = stoi(input, nullptr, 10);
     
-    // check if a is a valid index
+    // check if it is a valid index
     if ( setting < 0 || setting > 25 ) {
       std::cerr << "Error: Rotor config contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
