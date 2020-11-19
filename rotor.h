@@ -6,6 +6,7 @@
    Please refer to the comments beside each member for more information.
  */
 class Rotor{
+private:
   // Internal wiring of a rotor, using a 0-based index. If rotor_mapping[0] == "2", the rotor maps "A" to "C".
   int rotor_mapping[26];
 
@@ -15,17 +16,18 @@ class Rotor{
   int notch[26];          // contains information on the rotor's notch position  
   int start_pos;          // Sets the rotor's starting position based on config file
   int rotor_pos;          // rotor's position in the machine (0 = lefthand most rotor)  
-
+  
   // used in default constructor to initialise *one* rotor.
   void load_rotor_setting(const char* filename, const int pos_array[], const int pos);
 
   // to rotate (eg 'Z' becomes 'Y') input_mapping of a rotor by one position
   void rotate_rotor();
   
- public:
- 
+public:
+  Rotor* ptr_to_next_rotor;
+    
   // default constructor. Note that rotor_pos starts from 0 for the left most rotor.
-  Rotor(){};
+  Rotor();
   Rotor(const char*filename, const int pos_array[], const int rotor_pos){   
     load_rotor_setting(filename, pos_array, rotor_pos);
     this -> rotor_pos = rotor_pos;
@@ -45,9 +47,6 @@ class Rotor{
 
 // loads rotor starting position from config file
 void load_rotor_pos(const char* filename, int pos_array[], const int number_of_rotors);
-
-// initialises a *group* of rotors when the objects are first created
-void initialise_enigma_rotors(Rotor enigma_rotors[], const int number_of_rotors, char* argv[]);
 
 
 #endif
