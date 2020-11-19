@@ -61,6 +61,21 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
 
 }
 
+// this function initialises enigma_rotors based on input parameters
+void initialise_enigma_rotors(Rotor enigma_rotors[], const int number_of_rotors, char* argv[]){
+
+  // rotor position array will always be one larger than the number of rotors to initialise an array of 1 when there are 0 rotors
+  int pos_array[number_of_rotors+1];
+  load_rotor_pos(argv[number_of_rotors+4-1], pos_array, number_of_rotors);
+
+  
+  // Initialise each Rotor from right (higher number) to left (lower number)
+  for ( int i = number_of_rotors - 1; i >= 0; i--){
+    enigma_rotors[i] = Rotor(argv[3+i], pos_array, i);
+  }
+}
+
+
 // ========== rotor class member functions ==========
 
 // this function rotates the rotor based on the notch
@@ -211,4 +226,3 @@ int Rotor::left_to_right(const int left_input){
   
   return right_output;
 }
-
