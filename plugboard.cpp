@@ -54,7 +54,8 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     }
 
     // convert string to integer if numeric
-    int setting = stoi(input, nullptr, 10);
+    int base = 10;
+    int setting = stoi(input, nullptr, base);
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
@@ -89,16 +90,16 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS); 
   }
   
-  int blank_setting = 99;          // set unused settings as 99
+  int unutilised_setting = 99;          // set unused settings as 99
   for (int x = count; x < 26; x++){    
-    pb_setting[x] = blank_setting;
+    pb_setting[x] = unutilised_setting;
   }
 
   // map the entire plugboard using the settings 
   for ( int x = 0; x<26; x++) pb_mapping[x] = x;
   
   for ( int i = 0; i < 26; i+=2 ) {
-    if(pb_setting[i] == blank_setting) break; 
+    if(pb_setting[i] == unutilised_setting) break; 
     pb_mapping[pb_setting[i]] = pb_setting[i+1];
     pb_mapping[pb_setting[i+1]] = pb_setting[i];
   }
