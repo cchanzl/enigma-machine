@@ -83,10 +83,9 @@ void decoder_encoder( int input, Plugboard plugboard, Reflector reflector, Rotor
 
 // this function reads input from from the standard input stream into an array
 void enigma_machine(Plugboard plugboard, Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
-  
-  for ( char character; std::cin.get(character); ) {
 
-    if ( isspace(character))continue;
+  char character;
+  while ( std::cin >> std::ws >> character){
     
     // to check if input is from A to Z
     if ( character < 65 || character > 90){
