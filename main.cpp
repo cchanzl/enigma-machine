@@ -6,7 +6,7 @@
 
 int main (int argc, char** argv){
 
-  // =========== CHECK COMMAND LINE ARGUMENTS ===========
+  // =========== CHECK COMMAND LINE ARGUMENTS ============
   check_command_line(argc, argv);
 
   // =========== SETTING ROTORS ===========
