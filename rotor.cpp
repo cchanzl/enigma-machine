@@ -26,6 +26,9 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
 
   while(in >> input){
 
+    // Exits while loop once the required number of rotor positions is read
+    if ( count == number_of_rotors) break;
+    
     // check for non-numeric characters
     for(char& c : input) {
       if ( !isdigit(c) ){

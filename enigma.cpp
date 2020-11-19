@@ -85,7 +85,6 @@ void Enigma::encrypt(Rotor* enigma_rotors){
   while ( std::cin >> std::ws >> character){
     
     // to check if input is from A to Z
-    //if ( character < 65 || character > 90){
     if( !isalpha(character) || !isupper(character)  ){
       std::cerr << character << " is not a valid input character (input characters must be upper case letters A-Z)!" << std::endl;
       exit(INVALID_INPUT_CHARACTER);
