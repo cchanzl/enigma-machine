@@ -5,6 +5,7 @@
 #include "plugboard.h"
 #include "rotor.h"
 
+
 class Enigma{
   int argc;
   char** argv;
@@ -18,7 +19,7 @@ class Enigma{
  
 public:
   Enigma(int argc, char** argv)
-    : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc-4){};
+    : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc - FIXED_ARGV){};
 
   // this reads input from the standard input stream and calls decoder_encoder(). It takes the key components of the enigma machine as arguments.
   void encrypt(Rotor* enigma_rotors);

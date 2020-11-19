@@ -15,8 +15,8 @@ int Reflector::reflector_output(int input) const {
 
 
 // this function loads the reflector settings from the parameters provided
-void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
- int rf_setting[26];
+void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPHABETS]){
+ int rf_setting[NUM_OF_ALPHABETS];
   
   // loading reflector settings into rf_setting
  std::ifstream in(filename);
@@ -31,8 +31,8 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
   // cycles through each char in input and assign to reflector array
   while(in >> input){
 
-    // check if there are 27 parameters in reflector.rf
-    if ( count == 26 ){
+    // check if while loop enters 27th loop, if yes, means there are 27 param
+    if ( count == NUM_OF_ALPHABETS ){
       std::cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << std::endl;
       exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
     }
@@ -47,10 +47,10 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
     }
 
     // convert string to integer if numeric
-    int setting = stoi(input, nullptr, 10);
+    int setting = stoi(input, nullptr);
     
-    // check if a is a valid index
-    if ( setting < 0 || setting > 25 ) {
+    // check if it is a valid index
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS ) {
       std::cerr << "Error: Reflector setting contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
     }
@@ -84,21 +84,22 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
   }
 
   // check if there are lesser than 26 parameters
-  if ( count < 26 ) {    // 26 because the last loop will increment count one more time
+  if ( count < NUM_OF_ALPHABETS ) {    // 26 because the last loop will increment count one more time
     std::cerr << "Insufficient number of mappings in reflector file: reflector.rf" << std::endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 
   // map the entire reflector using the settings 
-  for ( int x = 0; x<26; x++) rf_mapping[x] = x;
+  for ( int x = 0; x< NUM_OF_ALPHABETS; x++) rf_mapping[x] = x;
   
-  for ( int i = 0; i < 26; i+=2 ) {
+  for ( int i = 0; i < NUM_OF_ALPHABETS; i+=2 ) {
     rf_mapping[rf_setting[i]] = rf_setting[i+1];
     rf_mapping[rf_setting[i+1]] = rf_setting[i];
   }
 
   // closes ifstream
   in.close();
+  in.good();
 
   
 }

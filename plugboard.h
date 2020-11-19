@@ -1,6 +1,7 @@
 #ifndef PLUGBOARD_H
 #define PLUGBOARD_H
 
+# include "constants.h"
 
 /* This is a user defined class for Plugboard, one of the key components in the engima machine.
    There can only be one plugboard defined for an engima machine.
@@ -9,7 +10,7 @@
 
 class Plugboard{
 private:
-  int pb_mapping[26]; // Specifies connection between two contacts. the numbers are the 0-based index into the alphabet.
+  int pb_mapping[NUM_OF_ALPHABETS]; // Specifies connection between two contacts. the numbers are the 0-based index into the alphabet.
 
   // used in default constructor to initialise pb_mapping based on input
   void load_pb_setting(const char* filename, int pb_mapping[26]);

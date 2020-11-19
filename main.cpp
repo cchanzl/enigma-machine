@@ -4,6 +4,7 @@
 
 int main (int argc, char** argv){
   
+  // For global constants, please see "constants.h"
   
   
   // =========== CHECK COMMAND LINE ARGUMENTS ===========
@@ -11,7 +12,7 @@ int main (int argc, char** argv){
   
   
   // =========== SETTING ROTORS ===========
-  int number_of_rotors = argc-4;
+  int number_of_rotors = argc - FIXED_ARGV;
   Enigma enigma = Enigma(argc, argv);
  
   // to initialise the set of enigma rotors. does nothing if there are no rotors.

@@ -35,10 +35,10 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
     }
 
     // convert string to integer if numeric
-    int setting = stoi(input, nullptr, 10);
+    int setting = stoi(input, nullptr);
     
     // check if it is a valid index
-    if ( setting < 0 || setting > 25 ) {
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
       std::cerr << "Error: Position config contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
     }
@@ -64,15 +64,14 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
 // this function initialises enigma_rotors based on input parameters
 void initialise_enigma_rotors(Rotor enigma_rotors[], const int number_of_rotors, char* argv[]){
 
-  int fixed_starting_argv = 3;
   
   // Initialise array containing each rotor's starting position
   int pos_array[number_of_rotors];
-  load_rotor_pos(argv[number_of_rotors + fixed_starting_argv], pos_array, number_of_rotors);
+  load_rotor_pos(argv[number_of_rotors + FIXED_ARGV-1], pos_array, number_of_rotors);
   
   // Initialise each Rotor from right (higher number) to left (lower number)
   for ( int i = number_of_rotors - 1; i >= 0; i--){
-    enigma_rotors[i] = Rotor(argv[fixed_starting_argv+i], pos_array, i);
+    enigma_rotors[i] = Rotor(argv[FIXED_ARGV-1 + i ], pos_array, i);
   }
 }
 
@@ -85,27 +84,33 @@ void Rotor::rotor_rotation(Rotor enigma_rotors[], const int number_of_rotors, co
   // if it is rightmost rotor, rotate immediately
   if ( rotor_num == number_of_rotors - 1) rotate_rotor();
   else {
-    for ( int n = 0; n < 26; n++){
+    for ( int n = 0; n < NUM_OF_ALPHABETS; n++){
       if ( enigma_rotors[rotor_num+1].notch[n] == enigma_rotors[rotor_num+1].input_mapping[0]) rotate_rotor();
     }
+  }
+}
+
+void Rotor::update_input_mapping(int start_pos){
+  int start_12 = start_pos;
+  for ( int i = 0; i <  NUM_OF_ALPHABETS; i++){
+    input_mapping[i] = start_12;
+    if (start_12 ==  NUM_OF_ALPHABETS-1) start_12 = -1;
+    start_12 += 1;
   }
 }
 
 // this function rotates rotor by one notch
 void Rotor::rotate_rotor(){
 
-  int start_12;
+  int start_12; // declare a variable to represent the 12 o'clock position
   
-  // first, find new position
-  if ( input_mapping[0]+1 == 26 ) start_12 = 0;
+  // first, find new 12 o'clock position
+  if ( input_mapping[0]+1 == NUM_OF_ALPHABETS ) start_12 = 0;
   else start_12 = input_mapping[0]+1;
   
-  //second, +1 to get each subsequent position
-  for ( int i = 0; i < 26; i++){
-    input_mapping[i] = start_12;
-    if (start_12 == 25) start_12 = -1;
-    start_12 += 1;
-  }
+  //second, +1 from 12 o'clock position to get each subsequent position
+  update_input_mapping(start_12);
+ 
 }
 
 // this member function loads rotor settings from paramters provided, based on the rotors position in the machine
@@ -115,12 +120,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   this->start_pos = pos_array[rotor_pos];
 
   // Assign starting input rotor position
-  int start_12 = start_pos;
-  for ( int i = 0; i < 26; i++){
-    input_mapping[i] = start_12;
-    if (start_12 == 25) start_12 = -1;
-    start_12 += 1;
-  }
+  update_input_mapping(start_pos);
  
   // loading internal rotor config into rotor_mapping
   std::ifstream in(filename);
@@ -133,7 +133,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   std::string input;
 
   // to initilise notch array
-  for ( int i = 0; i < 26; i ++){
+  for ( int i = 0; i < NUM_OF_ALPHABETS; i ++){
     int unutilised_setting = 99;
     notch[i] = unutilised_setting;
   }
@@ -149,23 +149,22 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     }
 
     // convert string to integer if numeric
-    int base = 10;
-    int setting = stoi(input, nullptr, base);
+    int setting = stoi(input, nullptr);
     
     // check if it is a valid index
-    if ( setting < 0 || setting > 25 ) {
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
       std::cerr << "Error: Rotor config contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
     }
     
     // for all numbers after the first 26, add it to notch setting
-    if ( count > 25 ) {
-      notch[count-26] = setting; 
+    if ( count > NUM_OF_ALPHABETS-1 ) {
+      notch[count-NUM_OF_ALPHABETS] = setting; 
     }
     else rotor_mapping[count] = setting;
     
-    // check if number for rotor mapping is repeated in first 26 positions
-    if ( count < 26 ){
+    // check if number for rotor mapping is repeated in when going thru first 26 inputs
+    if ( count < NUM_OF_ALPHABETS ){
       for ( int i = 0; i < count; i++){
 	if ( rotor_mapping[count] == rotor_mapping[i] ) {
 	  std::cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ") in rotor.rot" << std::endl; 
@@ -177,7 +176,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     // check if number for notch is repeated in next 26 positions
     else{
       for ( int i = 0; i < count-26; i++){
-	if ( notch[count-26] == notch[i] ) {
+	if ( notch[count - NUM_OF_ALPHABETS] == notch[i] ) {
 	  std::cerr << "notch is repeated" << std::endl; 
 	  exit(INVALID_ROTOR_MAPPING);
 	}

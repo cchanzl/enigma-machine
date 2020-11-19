@@ -22,7 +22,7 @@ int Plugboard::left_to_right(int input) const{
 // this function loads the plugboard settings from parameters provided
 void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
 
-  int pb_setting[26];
+  int pb_setting[NUM_OF_ALPHABETS];
   
   // loading plugboard settings into pb_setting
   std::ifstream in(filename);
@@ -39,7 +39,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
   while(in >> input){
 
     // check if there are more than 26 parameters
-    if ( count == 26 ) {
+    if ( count == NUM_OF_ALPHABETS ) {
       std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
       exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     }
@@ -54,8 +54,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     }
 
     // convert string to integer if numeric
-    int base = 10;
-    int setting = stoi(input, nullptr, base);
+    int setting = stoi(input, nullptr);
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
@@ -91,14 +90,14 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
   }
   
   int unutilised_setting = 99;          // set unused settings as 99
-  for (int x = count; x < 26; x++){    
+  for (int x = count; x < NUM_OF_ALPHABETS; x++){    
     pb_setting[x] = unutilised_setting;
   }
 
   // map the entire plugboard using the settings 
-  for ( int x = 0; x<26; x++) pb_mapping[x] = x;
+  for ( int x = 0; x<NUM_OF_ALPHABETS; x++) pb_mapping[x] = x;
   
-  for ( int i = 0; i < 26; i+=2 ) {
+  for ( int i = 0; i < NUM_OF_ALPHABETS; i+=2 ) {
     if(pb_setting[i] == unutilised_setting) break; 
     pb_mapping[pb_setting[i]] = pb_setting[i+1];
     pb_mapping[pb_setting[i+1]] = pb_setting[i];

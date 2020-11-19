@@ -1,16 +1,18 @@
 #ifndef ROTOR_H
 #define ROTOR_H
 
+# include "constants.h"
+
 /* This is a user defined class for Rotor, one of the key components in the engima machine.
    There can be multiple Rotors defined as required by the user.
    Please refer to the comments beside each member for more information.
  */
 class Rotor{
   // Internal wiring of a rotor, using a 0-based index. If rotor_mapping[0] == "2", the rotor maps "A" to "C".
-  int rotor_mapping[26];
+  int rotor_mapping[NUM_OF_ALPHABETS];
 
   // Frame of reference for the rotor, using a 0-based index. If input_mapping[0] == "25", "Z" is at the 12 o'clock position
-  int input_mapping[26];
+  int input_mapping[NUM_OF_ALPHABETS];
   
   int notch[26];          // contains information on the rotor's notch position  
   int start_pos;          // Sets the rotor's starting position based on config file
@@ -21,6 +23,9 @@ class Rotor{
 
   // to rotate (eg 'Z' becomes 'Y') input_mapping of a rotor by one position
   void rotate_rotor();
+
+  // this function updates input_mapping with a new position when it rotate is called
+  void update_input_mapping(int start_pos);
   
  public:
  

@@ -15,7 +15,7 @@
 // this function returns the index position of the second argument in the array
 int search_array(const int mapping[], const int value){
 
-  for ( int i = 0; i < 26; i++){
+  for ( int i = 0; i < NUM_OF_ALPHABETS; i++){
     if ( mapping[i] == value ) return i;   
   }
 
@@ -31,7 +31,7 @@ int search_array(const int mapping[], const int value){
 void check_command_line(int argc, char* argv[]){
 
   // check for at least 4 command line arguments
-  if ( argc < 4 ) {
+  if ( argc < FIXED_ARGV ) {
     std::cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << std::endl;
     exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
   }
@@ -72,7 +72,7 @@ void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflec
   //Scramble through Plugboard
   output = plugboard.left_to_right(output);
   
-  char letter = static_cast<char>(output + 65); 
+  char letter = static_cast<char>(output + ASCII_OFFSET); 
   std::cout << letter;
     
 }
@@ -92,8 +92,7 @@ void Enigma::encrypt(Rotor* enigma_rotors){
     }
    
     // convert string to integer if numeric and add to enigma_input
-    int offset = 65;  // to be used when converting from char to int
-    int input = static_cast<int>(character) - offset;  
+    int input = static_cast<int>(character) - ASCII_OFFSET;  
     
     // decode/endocde input
     decoder_encoder(input, plugboard, reflector, enigma_rotors, number_of_rotors);
