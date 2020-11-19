@@ -13,16 +13,14 @@
 // ========== internal helper functions ==========
 
 // this function returns the index position of the second argument in the array
-int search_array(int mapping[], int output){
-  
- for ( int i = 0; i < 26; i++){
-   if ( mapping[i] == output ) {
-     output = i;
-     break;
-   }
- }
+int search_array(const int mapping[], const int value){
 
- return output;
+  for ( int i = 0; i < 26; i++){
+    if ( mapping[i] == value ) return i;   
+  }
+
+  // return -1 if not found
+  return -1;
 
 }
 
@@ -41,12 +39,11 @@ void check_command_line(int argc, char* argv[]){
   // check first argument
   std::string arg_1 = "./enigma";
   if ( argv[0] != arg_1) std::cerr << "Incorrect command line arguments" << std::endl; 
-  
 
 }
 
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
-void decoder_encoder( int input, Plugboard plugboard, Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
+void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
 
   int output = 0;
     
@@ -82,7 +79,7 @@ void decoder_encoder( int input, Plugboard plugboard, Reflector reflector, Rotor
 
 
 // this function reads input from from the standard input stream into an array
-void enigma_machine(Plugboard plugboard, Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
+void Enigma::encrypt(Rotor enigma_rotors[]){
 
   char character;
   while ( std::cin >> std::ws >> character){

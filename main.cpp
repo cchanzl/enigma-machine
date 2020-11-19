@@ -9,9 +9,6 @@ int main (int argc, char** argv){
   // =========== CHECK COMMAND LINE ARGUMENTS ===========
   check_command_line(argc, argv);
 
-  // =========== SETTING PLUGBOARD ===========
-  Plugboard plugboard = Plugboard(argv[1]);
-  
   // =========== SETTING ROTORS ===========
   int number_of_rotors = argc-4;
 
@@ -21,11 +18,9 @@ int main (int argc, char** argv){
   // to initialise the set of enigma rotors. does nothing if there are no rotors.
   initialise_enigma_rotors(enigma_rotors, number_of_rotors, argv);
   
-  // =========== SETTING REFLECTOR ===========
-  Reflector reflector = Reflector(argv[2]);
-
   // =========== ENCODING/DECODING INPUT ===========
-  enigma_machine(plugboard, reflector, enigma_rotors, number_of_rotors);
+  Enigma enigma = Enigma(argc, argv);
+  enigma.encrypt(enigma_rotors);
 
   // If no errors, exit normally
   return 0;

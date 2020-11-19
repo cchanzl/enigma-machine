@@ -4,8 +4,6 @@
 #include <string>
 
 #include "rotor.h"
-#include "reflector.h"  // necessary because enigma.h references Reflector class
-#include "plugboard.h"  // necessary because enigma.h references Plugboard class
 #include "enigma.h"     // necessary because search_array() is used below
 #include "errors.h"
 
@@ -14,7 +12,7 @@
 
 
 // this function loads the starting rotor position setting from parameters provided
-void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors){
+void load_rotor_pos(const char* filename, int pos_array[], const int number_of_rotors){
 
   // loading rotor config into rotor_mapping
   std::ifstream in(filename);
@@ -30,7 +28,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 
     // check for non-numeric characters
     for(char& c : input) {
-      if ( c < 48 || c > 57){
+      if ( c < '0' || c > '9'){
 	std::cerr << "Non-numeric character in rotor positions file rotor.pos" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
@@ -64,7 +62,7 @@ void load_rotor_pos(const char* filename, int pos_array[], int number_of_rotors)
 }
 
 // this function initialises enigma_rotors based on input parameters
-void initialise_enigma_rotors(Rotor enigma_rotors[], int number_of_rotors, char* argv[]){
+void initialise_enigma_rotors(Rotor enigma_rotors[], const int number_of_rotors, char* argv[]){
 
   // rotor position array will always be one larger than the number of rotors to initialise an array of 1 when there are 0 rotors
   int pos_array[number_of_rotors+1];
@@ -74,7 +72,6 @@ void initialise_enigma_rotors(Rotor enigma_rotors[], int number_of_rotors, char*
   // Initialise each Rotor from right (higher number) to left (lower number)
   for ( int i = number_of_rotors - 1; i >= 0; i--){
     enigma_rotors[i] = Rotor(argv[3+i], pos_array, i);
-    //enigma_rotors[i].print_rotor_setting();
   }
 }
 
@@ -82,7 +79,7 @@ void initialise_enigma_rotors(Rotor enigma_rotors[], int number_of_rotors, char*
 // ========== rotor class member functions ==========
 
 // this function rotates the rotor based on the notch
-void Rotor::rotor_rotation(Rotor enigma_rotors[], int number_of_rotors, int rotor_num){
+void Rotor::rotor_rotation(Rotor enigma_rotors[], const int number_of_rotors, const int rotor_num){
 
   // if it is rightmost rotor, rotate immediately
   if ( rotor_num == number_of_rotors - 1) rotate_rotor();
@@ -108,29 +105,6 @@ void Rotor::rotate_rotor(){
     if (start_12 == 25) start_12 = -1;
     start_12 += 1;
   }
-}
-
-// this function prints rotor settings for debugging purposes
-void Rotor::print_rotor_setting(){
-  std::cout << std::endl;
-  
-  std::cout << "Starting position for rotor " << rotor_pos << " is: " << start_pos << std::endl;
-  
-  std::cout << "reference num: ";
-  for ( int i = 0; i<26; i++) std::cout << std::setw(2) << i << " ";
-  std::cout << std::endl;
-
-  std::cout << "Input mapping: ";
-  for ( int x = 0; x<26; x++) std::cout << std::setw(2) << input_mapping[x] << " ";
-  std::cout << std::endl;
-
-  std::cout << "Rotor mapping: ";
-  for ( int x = 0; x<26; x++) std::cout << std::setw(2) << rotor_mapping[x] << " ";
-  std::cout << std::endl;
-
-  std::cout << "Notch mapping: ";
-  for ( int x = 0; x<26; x++) std::cout << std::setw(2) << notch[x] << " ";
-  std::cout << std::endl;
 }
 
 // this member function loads rotor settings from paramters provided, based on the rotors position in the machine
@@ -230,7 +204,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
 }
 
 // this member function scrambles input into a rotor entering from right to left
-int Rotor::right_to_left(int right_input){
+int Rotor::right_to_left(const int right_input){
 
   int left_output;
 
@@ -242,7 +216,7 @@ int Rotor::right_to_left(int right_input){
 }
 
 // this member function scrambles input into a rotor entering from left to right
-int Rotor::left_to_right(int left_input){
+int Rotor::left_to_right(const int left_input){
 
   int right_output;
 

@@ -4,19 +4,17 @@
 #include <string>
 
 #include "plugboard.h"
-#include "rotor.h"
-#include "reflector.h"
 #include "enigma.h"
 #include "errors.h"
 
 // this function scrambles input through the plugboard from right to left
-int Plugboard::right_to_left(int input){
+int Plugboard::right_to_left(int input) const{
   return pb_mapping[input];
 }
 
 
 // this function scrambles input through the plugboard from left to right
-int Plugboard::left_to_right(int input){
+int Plugboard::left_to_right(int input) const{
   return search_array(pb_mapping, input);
 }
 
