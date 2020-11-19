@@ -9,9 +9,6 @@
 #include "enigma.h"
 #include "errors.h"
 
-
-using namespace std;
-
 // this function scrambles input through the plugboard from right to left
 int Plugboard::right_to_left(int input){
   return pb_mapping[input];
@@ -30,14 +27,14 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
   int pb_setting[26];
   
   // loading plugboard settings into pb_setting
-  ifstream in(filename);
+  std::ifstream in(filename);
   if (!in) {
-    cerr << "Error: Unable to open or read configuration files" << endl;
+    std::cerr << "Error: Unable to open or read configuration files" << std::endl;
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
 
   int count = 0;      // counts how many pb settings are defined
-  string input;
+  std::string input;
 
   
   // cycles through each char in input and assign to plugboard array
@@ -45,7 +42,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
 
     // check if there are more than 26 parameters
     if ( count == 26 ) {
-      cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
+      std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
       exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     }
 
@@ -53,7 +50,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cerr << "Non-numeric character in plugboard file plugboard.pb" << endl;
+	std::cerr << "Non-numeric character in plugboard file plugboard.pb" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -63,7 +60,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cerr << "Error: Plugboard setting contains a number not between 0 and 25" << endl;
+      std::cerr << "Error: Plugboard setting contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
     }
     
@@ -72,14 +69,14 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
     
     // check if plugboard connects with itself
     if ( count % 2 != 0 && pb_setting[count - 1] == pb_setting[count] ){
-      cerr << "Error: Plugboard attempts to connect a contact with itself" << endl;
+      std::cerr << "Error: Plugboard attempts to connect a contact with itself" << std::endl;
       exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
     }
 
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( pb_setting[count] == pb_setting[i] ) {
-	cerr << "Invalid mapping of " << pb_setting[count] << " (it is already mapped) in plugboard.pb" << endl;
+	std::cerr << "Invalid mapping of " << pb_setting[count] << " (it is already mapped) in plugboard.pb" << std::endl;
 	exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
       }
     }
@@ -90,7 +87,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
 
   // check if there is an even number of settings
   if (count % 2 != 0) {
-    cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
+    std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
     exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS); 
   }
   

@@ -6,7 +6,6 @@
 #include "reflector.h"
 #include "errors.h"
 
-using namespace std;
 
 // this function scrambles input through the reflector
 int Reflector::reflector_output(int input){
@@ -20,21 +19,21 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
  int rf_setting[26];
   
   // loading reflector settings into rf_setting
-  ifstream in(filename);
+ std::ifstream in(filename);
   if (!in) {
-    cerr << "Error: Unable to open or read configuration files" << endl;
+    std::cerr << "Error: Unable to open or read configuration files" << std::endl;
     exit(ERROR_OPENING_CONFIGURATION_FILE);
   }
 
   int count = 0;      // counts how many rf settings are defined
-  string input;
+  std::string input;
 
   // cycles through each char in input and assign to reflector array
   while(in >> input){
 
     // check if there are 27 parameters in reflector.rf
     if ( count == 26 ){
-      cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
+      std::cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << std::endl;
       exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
     }
 
@@ -42,7 +41,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
     // check for non-numeric characters
     for(char& c : input) {
       if ( c < 48 || c > 57){
-	cerr << "Non-numeric character in reflector file reflector.rf" << endl;
+	std::cerr << "Non-numeric character in reflector file reflector.rf" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
       }; 
     }
@@ -52,7 +51,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check if a is a valid index
     if ( setting < 0 || setting > 25 ) {
-      cerr << "Error: Reflector setting contains a number not between 0 and 25" << endl;
+      std::cerr << "Error: Reflector setting contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
     }
     
@@ -61,14 +60,14 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
     
     // check if plugboard connects with itself
     if ( count % 2 != 0 && rf_setting[count - 1] == rf_setting[count] ){
-      cerr << "Error: Reflector attempts to connect a contact with itself" << endl;
+      std::cerr << "Error: Reflector attempts to connect a contact with itself" << std::endl;
       exit(INVALID_REFLECTOR_MAPPING);
     }
 
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( rf_setting[count] == rf_setting[i] ) {
-	cerr << "Error: Reflector attempts to connect with more than one contact" << endl;
+	std::cerr << "Error: Reflector attempts to connect with more than one contact" << std::endl;
 	exit(INVALID_REFLECTOR_MAPPING);
       }
     }
@@ -80,13 +79,13 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[26]){
 
   // check if there is an even number of settings
   if (count % 2 != 0) {
-    cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << endl;
+    std::cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << std::endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS); 
   }
 
   // check if there are lesser than 26 parameters
   if ( count < 26 ) {    // 26 because the last loop will increment count one more time
-    cerr << "Insufficient number of mappings in reflector file: reflector.rf" << endl;
+    std::cerr << "Insufficient number of mappings in reflector file: reflector.rf" << std::endl;
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }    
 

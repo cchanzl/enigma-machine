@@ -10,8 +10,6 @@
 #include "errors.h"
 
 
-using namespace std;
-
 // ========== internal helper functions ==========
 
 // this function returns the index position of the second argument in the array
@@ -36,13 +34,13 @@ void check_command_line(int argc, char* argv[]){
 
   // check for at least 4 command line arguments
   if ( argc < 4 ) {
-    cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << endl;
+    std::cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << std::endl;
     exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
   }
 
   // check first argument
-  string arg_1 = "./enigma";
-  if ( argv[0] != arg_1) cout << "Incorrect command line arguments" << endl; 
+  std::string arg_1 = "./enigma";
+  if ( argv[0] != arg_1) std::cerr << "Incorrect command line arguments" << std::endl; 
   
 
 }
@@ -78,32 +76,31 @@ void decoder_encoder( int input, Plugboard plugboard, Reflector reflector, Rotor
   output = plugboard.left_to_right(output);
   
   char letter = static_cast<char>(output + 65); 
-  cout << letter;
+  std::cout << letter;
     
 }
 
 
 // this function reads input from from the standard input stream into an array
 void enigma_machine(Plugboard plugboard, Reflector reflector, Rotor enigma_rotors[], int number_of_rotors){
-  //cout << "Please enter text to be encoded/decoded in UPPER case." << endl;
+  
+  for ( char character; std::cin.get(character); ) {
 
-  string input;
-  cin >> input;
-  
-  for(char& c : input){
-  
+    if ( isspace(character))continue;
+    
     // to check if input is from A to Z
-    if ( c < 65 || c > 90){
-      cerr << c << " is not a valid input character (input characters must be upper case letters A-Z)!" << endl;
+    if ( character < 65 || character > 90){
+      std::cerr << character << " is not a valid input character (input characters must be upper case letters A-Z)!" << std::endl;
       exit(INVALID_INPUT_CHARACTER);
     }
    
     // convert string to integer if numeric and add to enigma_input
-    c = static_cast<int>(c) - 65;  
-
-    // decode/endocde input
-    decoder_encoder(c, plugboard, reflector, enigma_rotors, number_of_rotors);
+    int offset = 65;  // to be used when converting from char to int
+    int input = static_cast<int>(character) - offset;  
     
+    // decode/endocde input
+    decoder_encoder(input, plugboard, reflector, enigma_rotors, number_of_rotors);
+	
   }
     
 }
