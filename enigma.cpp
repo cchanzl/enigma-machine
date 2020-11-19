@@ -44,7 +44,7 @@ void check_command_line(int argc, char* argv[]){
 
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
 void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor* enigma_rotors, int number_of_rotors){
-
+  // initialise ouput as 0
   int output = 0;
     
   //Scramble through Plugboard

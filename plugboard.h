@@ -13,7 +13,7 @@ private:
   int pb_mapping[NUM_OF_ALPHABETS]; // Specifies connection between two contacts. the numbers are the 0-based index into the alphabet.
 
   // used in default constructor to initialise pb_mapping based on input
-  void load_pb_setting(const char* filename, int pb_mapping[26]);
+  void load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPHABETS]);
 
  public:
   Plugboard(const char* filename){

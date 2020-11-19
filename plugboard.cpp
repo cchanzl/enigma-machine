@@ -20,7 +20,7 @@ int Plugboard::left_to_right(int input) const{
 
 
 // this function loads the plugboard settings from parameters provided
-void Plugboard::load_pb_setting(const char* filename, int pb_mapping[26]){
+void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPHABETS]){
 
   int pb_setting[NUM_OF_ALPHABETS];
   

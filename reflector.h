@@ -12,7 +12,7 @@ private:
   int rf_mapping[NUM_OF_ALPHABETS];  // Internal wiring of the reflector.
 
   // used in default constructor to initialise rf_mapping based on input
-  void load_rf_setting(const char* filename, int rf_mapping[26]);
+  void load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPHABETS]);
   
 public:
   Reflector(const char* filename){

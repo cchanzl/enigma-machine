@@ -175,7 +175,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
 
     // check if number for notch is repeated in next 26 positions
     else{
-      for ( int i = 0; i < count-26; i++){
+      for ( int i = 0; i < count - NUM_OF_ALPHABETS; i++){
 	if ( notch[count - NUM_OF_ALPHABETS] == notch[i] ) {
 	  std::cerr << "notch is repeated" << std::endl; 
 	  exit(INVALID_ROTOR_MAPPING);
@@ -188,13 +188,13 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   }
   
   // rotor setting must have at least 26 numbers
-  if ( count < 26 ) {  
+  if ( count < NUM_OF_ALPHABETS ) {  
     std::cerr << "Not all inputs mapped in rotor file: rotor.rot" << std::endl;
     exit(INVALID_ROTOR_MAPPING);
   }
 
   // rotor setting must have lesser than 52 numbers (first 26 for rotor mapping and next 26 for notches)
-  if ( count > 52 ) {  
+  if ( count > 2*NUM_OF_ALPHABETS ) {  
     std::cerr << "Too many inputs in rotor file: rotor.rot" << std::endl;
     exit(INVALID_ROTOR_MAPPING);
   }
