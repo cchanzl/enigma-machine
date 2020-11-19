@@ -7,12 +7,13 @@
    Please refer to the comments beside each member for more information.
  */
 class Reflector{
+private:
   int rf_mapping[26];  // Internal wiring of the reflector.
 
   // used in default constructor to initialise rf_mapping based on input
   void load_rf_setting(const char* filename, int rf_mapping[26]);
   
- public:
+public:
   Reflector(const char* filename){
     load_rf_setting(filename, rf_mapping);
   }
