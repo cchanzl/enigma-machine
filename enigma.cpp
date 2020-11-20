@@ -95,7 +95,10 @@ void Enigma::encrypt(Rotor* enigma_rotors){
     
     // decode/endocde input
     decoder_encoder(input, plugboard, reflector, enigma_rotors, number_of_rotors);
-	
+
+    // check if newline is reached in standard input stream
+    if (std::cin.peek() == '\n') break;
+    
   }
     
 }
