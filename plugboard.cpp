@@ -37,7 +37,6 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
   
   // cycles through each char in input and assign to plugboard array
   while(in >> input){
-    std::cout << input << " ";
     
     // check if there are more than 26 parameters
     if ( count == NUM_OF_ALPHABETS ) {
@@ -48,7 +47,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     
     // check for non-numeric characters
     for(char& c : input) {
-      
+      std::cout << c;
       if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in plugboard file plugboard.pb" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);

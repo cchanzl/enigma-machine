@@ -11,7 +11,7 @@ int main (int argc, char** argv){
   check_command_line(argc, argv);
   
   
-  // =========== SETTING ROTORS ===========
+  // =========== ENCODING/DECODING INPUT ===========
   int number_of_rotors = argc - FIXED_ARGV;
   Enigma enigma = Enigma(argc, argv);
  
@@ -26,7 +26,6 @@ int main (int argc, char** argv){
   }
   
   
-  // =========== ENCODING/DECODING INPUT ===========
   
   // If no errors, exit normally
   return 0;
