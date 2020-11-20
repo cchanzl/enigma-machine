@@ -17,8 +17,8 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
   // loading rotor config into rotor_mapping
   std::ifstream in(filename);
   if (!in) {
-    std::cerr << "Error: Unable to open or read configuration files";
-    exit(ERROR_OPENING_CONFIGURATION_FILE);
+    std::cerr << "Error: Unable to open or read rotor pos config file" << std::endl;;
+    throw ERROR_OPENING_CONFIGURATION_FILE;
   }
   
   int count = 0;      // counts how many rotor positions are defined
@@ -43,7 +43,7 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
     // check if it is a valid index
     if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
       std::cerr << "Error: Position config contains a number not between 0 and 25" << std::endl;
-      exit(INVALID_INDEX);
+      throw INVALID_INDEX;
     }
 
     pos_array[count] = setting;
@@ -52,8 +52,8 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
   }
 
   // it is not ok if number of positions is lesser than number of rotors
-  // does not matter if number of posistions is larger than number of rotors since you can have 0 rotors with a non-zero config file
-  if ( count < number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
+  // does not matter if number of positions is larger than number of rotors since you can have 0 rotors with a non-zero config file
+  if ( count < number_of_rotors ){   
     std::cerr << "No starting position for rotor " << count  << " in rotor position file: rotor.pos" << std::endl;
     throw NO_ROTOR_STARTING_POSITION;
   }
@@ -128,7 +128,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   // loading internal rotor config into rotor_mapping
   std::ifstream in(filename);
   if (!in) {
-    std::cerr << "Error: Unable to open or read configuration files" << std::endl;
+    std::cerr << "Error: Unable to open or read rotor " << rotor_pos << " config file" << std::endl;
     throw ERROR_OPENING_CONFIGURATION_FILE;
   }
   

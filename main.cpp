@@ -12,6 +12,8 @@ int main (int argc, char** argv){
   
   
     // =========== ENCODING/DECODING INPUT ===========
+    // Note that rotor position starts from 0 from the left.
+    // Example: For three rotors, their position will be 0, 1 and 2 from left to right
     int number_of_rotors = argc - FIXED_ARGV;
     Enigma enigma = Enigma(argc, argv);
  

@@ -21,7 +21,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
   // loading reflector settings into rf_setting
  std::ifstream in(filename);
   if (!in) {
-    std::cerr << "Error: Unable to open or read configuration files" << std::endl;
+    std::cerr << "Error: Unable to open or read rf config file" << std::endl;
     throw ERROR_OPENING_CONFIGURATION_FILE;
   }
 

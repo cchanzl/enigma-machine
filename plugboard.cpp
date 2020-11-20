@@ -27,7 +27,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
   // loading plugboard settings into pb_setting
   std::ifstream in(filename);
   if (!in) {
-    std::cerr << "Error: Unable to open or read configuration files" << std::endl;
+    std::cerr << "Error: Unable to open or read pb config file" << std::endl;
     throw ERROR_OPENING_CONFIGURATION_FILE;
   }
 
