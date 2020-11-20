@@ -28,7 +28,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
   std::ifstream in(filename);
   if (!in) {
     std::cerr << "Error: Unable to open or read configuration files" << std::endl;
-    exit(ERROR_OPENING_CONFIGURATION_FILE);
+    throw ERROR_OPENING_CONFIGURATION_FILE;
   }
 
   int count = 0;      // counts how many pb settings are defined
@@ -41,16 +41,16 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     // check if there are more than 26 parameters
     if ( count == NUM_OF_ALPHABETS ) {
       std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
-      exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
+      throw INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
     }
 
     
     // check for non-numeric characters
     for(char& c : input) {
-      std::cout << c;
+
       if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in plugboard file plugboard.pb" << std::endl;
-	exit(NON_NUMERIC_CHARACTER);
+	throw NON_NUMERIC_CHARACTER;
       }; 
     }
 
@@ -60,7 +60,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     // check if a is a valid index
     if ( setting < 0 || setting > NUM_OF_ALPHABETS ) {
       std::cerr << "Error: Plugboard setting contains a number not between 0 and 25" << std::endl;
-      exit(INVALID_INDEX);
+      throw INVALID_INDEX;
     }
     
     // add to plugboard setting
@@ -69,25 +69,25 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     // check if plugboard connects with itself
     if ( count % 2 != 0 && pb_setting[count - 1] == pb_setting[count] ){
       std::cerr << "Error: Plugboard attempts to connect a contact with itself" << std::endl;
-      exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
+      throw IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
     }
 
     // check if number is used before
     for ( int i = 0; i < count; i++){
       if ( pb_setting[count] == pb_setting[i] ) {
 	std::cerr << "Invalid mapping of " << pb_setting[count] << " (it is already mapped) in plugboard.pb" << std::endl;
-	exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
+	throw IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
       }
     }
     
     count++;
     
   }  
-  std::cout << std::endl;
+
   // check if there is an even number of settings
   if (count % 2 != 0) {
     std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
-    exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS); 
+    throw INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS; 
   }
   
   int unutilised_setting = 99;          // set unused settings as 99

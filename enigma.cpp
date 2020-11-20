@@ -33,12 +33,8 @@ void check_command_line(int argc, char* argv[]){
   // check for at least 4 command line arguments
   if ( argc < FIXED_ARGV ) {
     std::cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << std::endl;
-    exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
+    throw INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
-
-  // check first argument
-  std::string arg_1 = "./enigma";
-  if ( argv[0] != arg_1) std::cerr << "Incorrect command line arguments" << std::endl; 
 
 }
 
@@ -87,7 +83,7 @@ void Enigma::encrypt(Rotor* enigma_rotors){
     // to check if input is from A to Z
     if( !isalpha(character) || !isupper(character)  ){
       std::cerr << character << " is not a valid input character (input characters must be upper case letters A-Z)!" << std::endl;
-      exit(INVALID_INPUT_CHARACTER);
+      throw INVALID_INPUT_CHARACTER;
     }
    
     // convert string to integer if numeric and add to enigma_input

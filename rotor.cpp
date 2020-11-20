@@ -33,7 +33,7 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
     for(char& c : input) {
       if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in rotor positions file rotor.pos" << std::endl;
-	exit(NON_NUMERIC_CHARACTER);
+	throw NON_NUMERIC_CHARACTER;
       }; 
     }
 
@@ -55,7 +55,7 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
   // does not matter if number of posistions is larger than number of rotors since you can have 0 rotors with a non-zero config file
   if ( count < number_of_rotors ){   // comparison is ok as the last loop +1 before exiting 
     std::cerr << "No starting position for rotor " << count  << " in rotor position file: rotor.pos" << std::endl;
-    exit(NO_ROTOR_STARTING_POSITION);
+    throw NO_ROTOR_STARTING_POSITION;
   }
 
 
@@ -129,7 +129,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   std::ifstream in(filename);
   if (!in) {
     std::cerr << "Error: Unable to open or read configuration files" << std::endl;
-    exit(ERROR_OPENING_CONFIGURATION_FILE);
+    throw ERROR_OPENING_CONFIGURATION_FILE;
   }
   
   int count = 0;      // counts how many rotor config are defined
@@ -147,7 +147,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     for(char& c : input) {
       if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character for mapping in rotor file rotor.rot" << std::endl;
-	exit(NON_NUMERIC_CHARACTER);
+	throw NON_NUMERIC_CHARACTER;
       }; 
     }
 
@@ -157,7 +157,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
     // check if it is a valid index
     if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
       std::cerr << "Error: Rotor config contains a number not between 0 and 25" << std::endl;
-      exit(INVALID_INDEX);
+      throw INVALID_INDEX;
     }
     
     // for all numbers after the first 26, add it to notch setting
@@ -171,7 +171,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
       for ( int i = 0; i < count; i++){
 	if ( rotor_mapping[count] == rotor_mapping[i] ) {
 	  std::cerr << "Invalid mapping of input " << count << " to output " << rotor_mapping[count] << " (output " << rotor_mapping[count] << " is already mapped to from input " << i  << ") in rotor.rot" << std::endl; 
-	  exit(INVALID_ROTOR_MAPPING);
+	  throw INVALID_ROTOR_MAPPING;
 	}
       }           
     }
@@ -181,7 +181,7 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
       for ( int i = 0; i < count - NUM_OF_ALPHABETS; i++){
 	if ( notch[count - NUM_OF_ALPHABETS] == notch[i] ) {
 	  std::cerr << "notch is repeated" << std::endl; 
-	  exit(INVALID_ROTOR_MAPPING);
+	  throw INVALID_ROTOR_MAPPING;
 	}
       }
     }
@@ -193,13 +193,13 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   // rotor setting must have at least 26 numbers
   if ( count < NUM_OF_ALPHABETS ) {  
     std::cerr << "Not all inputs mapped in rotor file: rotor.rot" << std::endl;
-    exit(INVALID_ROTOR_MAPPING);
+    throw INVALID_ROTOR_MAPPING;
   }
 
   // rotor setting must have lesser than 52 numbers (first 26 for rotor mapping and next 26 for notches)
   if ( count > 2*NUM_OF_ALPHABETS ) {  
     std::cerr << "Too many inputs in rotor file: rotor.rot" << std::endl;
-    exit(INVALID_ROTOR_MAPPING);
+    throw INVALID_ROTOR_MAPPING;
   }
 
   
