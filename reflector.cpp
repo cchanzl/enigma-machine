@@ -8,7 +8,7 @@
 
 
 // this function scrambles input through the reflector
-int Reflector::reflector_output(int input) const {
+int Reflector::reflector_output(const int input) const {
   int output;
   return output = rf_mapping[input];
 }

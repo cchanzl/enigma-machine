@@ -20,7 +20,7 @@ public:
   }
 
   // this function scrambles input through the reflector 
-  int reflector_output(int input) const;
+  int reflector_output(const int input) const;
 };
 
 #endif

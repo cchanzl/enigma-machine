@@ -5,6 +5,13 @@
 #include "plugboard.h"
 #include "rotor.h"
 
+/*
+namespace enigmaConstants {
+  int NUM_OF_ALPHABETS = 26;   // no. of alphabets accepted by enigma
+  int ASCII_OFFSET = 65;       // offset when converting from char to int
+  int FIXED_ARGV = 4;          // no. of fixed arg passed to the command line (enigma, pb, rf and pos)
+
+}*/
 
 class Enigma{
   int argc;

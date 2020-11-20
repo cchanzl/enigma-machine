@@ -37,7 +37,8 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
   
   // cycles through each char in input and assign to plugboard array
   while(in >> input){
-
+    std::cout << input << " ";
+    
     // check if there are more than 26 parameters
     if ( count == NUM_OF_ALPHABETS ) {
       std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
@@ -47,6 +48,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     
     // check for non-numeric characters
     for(char& c : input) {
+      
       if ( !isdigit(c) ){
 	std::cerr << "Non-numeric character in plugboard file plugboard.pb" << std::endl;
 	exit(NON_NUMERIC_CHARACTER);
@@ -57,7 +59,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     int setting = stoi(input, nullptr);
     
     // check if a is a valid index
-    if ( setting < 0 || setting > 25 ) {
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS ) {
       std::cerr << "Error: Plugboard setting contains a number not between 0 and 25" << std::endl;
       exit(INVALID_INDEX);
     }
@@ -82,7 +84,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     count++;
     
   }  
-
+  std::cout << std::endl;
   // check if there is an even number of settings
   if (count % 2 != 0) {
     std::cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << std::endl;
