@@ -38,8 +38,20 @@ void check_command_line(int argc, char* argv[]){
 
 }
 
+
+// ========== Enigma class member functions ==========
+
+Enigma::Enigma(int argc, char** argv)
+  : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc - FIXED_ARGV){
+  if ( number_of_rotors > 0) {
+    set_of_rotors = new Rotor[number_of_rotors];
+    initialise_enigma_rotors(set_of_rotors, number_of_rotors, argv);
+    
+  }
+}
+
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
-void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor* enigma_rotors, int number_of_rotors){
+void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor* set_of_rotors, const int number_of_rotors){
   // initialise ouput as 0
   int output = 0;
     
@@ -50,8 +62,8 @@ void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflec
   if ( number_of_rotors > 0 ){ 
     for ( int i = number_of_rotors - 1; i >= 0; i--){
       // if not the rightmost rotor, check notch of right rotor and turn if at 12 o'clock
-      enigma_rotors[i].rotor_rotation(enigma_rotors, number_of_rotors, i);
-      output = enigma_rotors[i].right_to_left(output);
+      (*(set_of_rotors + i)).rotor_rotation(set_of_rotors, number_of_rotors, i);
+      output = (set_of_rotors + i) -> right_to_left(output);
     }
   }
     
@@ -61,7 +73,7 @@ void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflec
   //Enter set of rotors from reflector. Start from the left. Does not enter for loop if number_of_rotors = 0.
   if ( number_of_rotors > 0 ){
     for ( int i = 0; i < number_of_rotors ; i++){
-      output = enigma_rotors[i].left_to_right(output);
+      output = (*(set_of_rotors + i)).left_to_right(output);
     }
   }
     
@@ -75,7 +87,7 @@ void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflec
 
 
 // this function reads input from from the standard input stream into an array
-void Enigma::encrypt(Rotor* enigma_rotors){
+void Enigma::encrypt(){
 
   char character;
   while ( std::cin >> std::ws >> character){
@@ -90,7 +102,7 @@ void Enigma::encrypt(Rotor* enigma_rotors){
     int input = static_cast<int>(character) - ASCII_OFFSET;  
     
     // decode/endocde input
-    decoder_encoder(input, plugboard, reflector, enigma_rotors, number_of_rotors);
+    decoder_encoder(input, plugboard, reflector, set_of_rotors, number_of_rotors);
 
     // check if newline is reached in standard input stream
     if (std::cin.peek() == '\n') break;

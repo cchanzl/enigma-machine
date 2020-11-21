@@ -14,20 +14,19 @@ class Enigma{
   int argc;
   char** argv;
   Plugboard plugboard;
-  //Rotor* rotors[];
+  Rotor* set_of_rotors;
   Reflector reflector;
   int number_of_rotors;
 
   // this is an internal helper function used in enncrypt() that encodes the message and output it to the standard output stream.
-  void decoder_encoder(int input, const Plugboard plugboard, const Reflector reflector, Rotor enigma_rotors[], int number_of_rotors);
+  void decoder_encoder(int input, const Plugboard plugboard, const Reflector reflector, Rotor* set_of_rotors, const int number_of_rotors);
  
 public:
   // Default constructor which initialises the various components of the machine
-  Enigma(int argc, char** argv)
-    : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc - FIXED_ARGV){};
+  Enigma(int argc, char** argv);
 
   // this reads input from the standard input stream and calls decoder_encoder().
-  void encrypt(Rotor* enigma_rotors);
+  void encrypt();
   
   
 };
