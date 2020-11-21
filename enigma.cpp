@@ -41,10 +41,13 @@ void check_command_line(int argc, char* argv[]){
 
 // ========== Enigma class member functions ==========
 
+// Default constructor
 Enigma::Enigma(int argc, char** argv)
   : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc - FIXED_ARGV){
   if ( number_of_rotors > 0) {
     set_of_rotors = new Rotor[number_of_rotors];
+
+    // initialise each rotor in the array accordingly
     initialise_enigma_rotors(set_of_rotors, number_of_rotors, argv);
     
   }
