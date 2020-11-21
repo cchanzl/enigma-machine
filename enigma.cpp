@@ -50,7 +50,7 @@ Enigma::Enigma(int argc, char** argv)
     // initialise each rotor in the array accordingly
     initialise_enigma_rotors(set_of_rotors, number_of_rotors, argv);
     
-  }
+  } else set_of_rotors = nullptr;
 }
 
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
