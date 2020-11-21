@@ -11,15 +11,15 @@ Please refer to the .h file for information on the other components.
  */
 
 class Enigma{
-  int argc;
-  char** argv;
-  Plugboard plugboard;
-  Rotor* set_of_rotors;
-  Reflector reflector;
-  int number_of_rotors;
+  int argc;                        // number of command line arguments  
+  char** argv;                     // pointer to an array of pointers
+  Plugboard plugboard;             // plugboard object. only 1 plugboard is allowed per machine
+  Rotor* set_of_rotors = nullptr;  // pointer to rotor 0, in a set of rotors, if number_of_rotors > 0. NULL otherwise.
+  Reflector reflector;             // reflector object. only 1 reflector is allowed per machine
+  int number_of_rotors;            // number of rotors in the machine  
 
   // this is an internal helper function used in enncrypt() that encodes the message and output it to the standard output stream.
-  void decoder_encoder(int input, const Plugboard plugboard, const Reflector reflector, Rotor* set_of_rotors, const int number_of_rotors);
+  void decoder_encoder(const int input, const Plugboard plugboard, const Reflector reflector, Rotor* const set_of_rotors, const int number_of_rotors);
  
 public:
   // Default constructor which initialises the various components of the machine
@@ -27,7 +27,6 @@ public:
 
   // this reads input from the standard input stream and calls decoder_encoder().
   void encrypt();
-  
   
 };
 

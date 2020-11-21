@@ -8,7 +8,7 @@
 
 
 // this function scrambles input through the reflector
-int Reflector::reflector_output(const int input) const {
+int Reflector::reflector_output(int input) const {
   int output;
   return output = rf_mapping[input];
 }
@@ -76,7 +76,6 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
     
   }
 
-
   // check if there is an even number of settings
   if (count % 2 != 0) {
     std::cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << std::endl;
@@ -90,7 +89,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
   }    
 
   // map the entire reflector using the settings 
-  for ( int x = 0; x< NUM_OF_ALPHABETS; x++) rf_mapping[x] = x;
+  for ( int x = 0; x < NUM_OF_ALPHABETS; x++) rf_mapping[x] = x;
   
   for ( int i = 0; i < NUM_OF_ALPHABETS; i+=2 ) {
     rf_mapping[rf_setting[i]] = rf_setting[i+1];

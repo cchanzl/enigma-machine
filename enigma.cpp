@@ -51,7 +51,7 @@ Enigma::Enigma(int argc, char** argv)
 }
 
 // this function brings together all the necessary parts of the enigma machine to encode/decode input to output
-void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflector reflector, Rotor* set_of_rotors, const int number_of_rotors){
+void Enigma::decoder_encoder(const int input, const Plugboard plugboard, const Reflector reflector, Rotor* const set_of_rotors, const int number_of_rotors){
   // initialise ouput as 0
   int output = 0;
     
@@ -64,6 +64,8 @@ void Enigma::decoder_encoder( int input, const Plugboard plugboard, const Reflec
       // if not the rightmost rotor, check notch of right rotor and turn if at 12 o'clock
       (*(set_of_rotors + i)).rotor_rotation(set_of_rotors, number_of_rotors, i);
       output = (set_of_rotors + i) -> right_to_left(output);
+
+
     }
   }
     

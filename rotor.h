@@ -1,7 +1,7 @@
 #ifndef ROTOR_H
 #define ROTOR_H
 
-# include "constants.h"
+#include "constants.h"
 
 /* This is a user defined class for Rotor, one of the key components in the engima machine.
    There can be multiple Rotors defined as required by the user.
@@ -31,13 +31,13 @@ class Rotor{
  
   // default constructor. Note that rotor_pos starts from 0 for the left most rotor.
   Rotor(){};
-  Rotor(const char*filename, const int pos_array[], const int rotor_pos){   
+  Rotor(const char* filename, const int pos_array[], const int rotor_pos){   
     load_rotor_setting(filename, pos_array, rotor_pos);
     this -> rotor_pos = rotor_pos;
   }
 
   // controls the rotation of each rotor based on rotor and notch position
-  void rotor_rotation(Rotor enigma_rotors[], const int number_of_rotors, const int rotor_num);  
+  void rotor_rotation(Rotor* const enigma_rotors, const int number_of_rotors, const int rotor_num);  
 
   // to decode/encode char entering from right of rotor and output to left
   int right_to_left(const int right_input);   
@@ -52,7 +52,7 @@ class Rotor{
 void load_rotor_pos(const char* filename, int pos_array[], const int number_of_rotors);
 
 // initialises a *group* of rotors when the objects are first created
-void initialise_enigma_rotors(Rotor enigma_rotors[], const int number_of_rotors, char* argv[]);
+void initialise_enigma_rotors(Rotor* const set_of_rotors, const int number_of_rotors, char* argv[]);
 
 
 #endif
