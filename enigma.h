@@ -5,13 +5,10 @@
 #include "plugboard.h"
 #include "rotor.h"
 
-/*
-namespace enigmaConstants {
-  int NUM_OF_ALPHABETS = 26;   // no. of alphabets accepted by enigma
-  int ASCII_OFFSET = 65;       // offset when converting from char to int
-  int FIXED_ARGV = 4;          // no. of fixed arg passed to the command line (enigma, pb, rf and pos)
+/* This is a user defined class for Enigma macihne, which contains the other key components as its member function. The engima machine encrypts messages be sending it through each of these components, starting from the plugboard, through the rotors (if any) from right to left, hitting the reflector, before returning through the rotors in the opposite direction back into the plugboard and ouput the encoded message via the standard output stream. 
 
-}*/
+Please refer to the .h file for information on the other components.
+ */
 
 class Enigma{
   int argc;
@@ -21,14 +18,15 @@ class Enigma{
   Reflector reflector;
   int number_of_rotors;
 
-  // this is an internal helper function used in enigma_machine() that encodes/decodes the message and output it to the standard output stream.
+  // this is an internal helper function used in enncrypt() that encodes the message and output it to the standard output stream.
   void decoder_encoder(int input, const Plugboard plugboard, const Reflector reflector, Rotor enigma_rotors[], int number_of_rotors);
  
 public:
+  // Default constructor which initialises the various components of the machine
   Enigma(int argc, char** argv)
     : argc(argc), argv(argv), plugboard(Plugboard(argv[1])), reflector(Reflector(argv[2])), number_of_rotors(argc - FIXED_ARGV){};
 
-  // this reads input from the standard input stream and calls decoder_encoder(). It takes the key components of the enigma machine as arguments.
+  // this reads input from the standard input stream and calls decoder_encoder().
   void encrypt(Rotor* enigma_rotors);
   
   
