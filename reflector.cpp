@@ -97,8 +97,5 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
   }
 
   // closes ifstream
-  in.close();
-  in.good();
-
-  
+  in.close();  
 }

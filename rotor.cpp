@@ -61,7 +61,6 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
 
   // closes ifstream
   in.close();
-  in.good();
 }
 
 // this function initialises enigma_rotors based on input parameters
@@ -207,7 +206,6 @@ void Rotor::load_rotor_setting(const char* filename, const int pos_array[], cons
   
   // closes ifstream
   in.close();
-  in.good();
 }
 
 // this member function scrambles input into a rotor entering from right to left
