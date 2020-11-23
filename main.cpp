@@ -1,4 +1,3 @@
-#include "rotor.h"
 #include "enigma.h"
 
 

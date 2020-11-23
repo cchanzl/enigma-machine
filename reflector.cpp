@@ -50,7 +50,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
     int setting = stoi(input, nullptr);
     
     // check if it is a valid index
-    if ( setting < 0 || setting > NUM_OF_ALPHABETS ) {
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS - 1 ) {
       std::cerr << "Error: Reflector setting contains a number not between 0 and 25" << std::endl;
       throw INVALID_INDEX;
     }

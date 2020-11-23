@@ -3,7 +3,7 @@
 
 # include "constants.h"
 
-/* This is a user defined class for Plugboard, one of the key components in the engima machine.
+/* This is a user defined class for Plugboard, one of the key components in the enigma machine.
    There can only be one plugboard defined for an engima machine.
    Please refer to the comments beside each member for more information.
  */

@@ -41,7 +41,7 @@ void load_rotor_pos(const char* filename, int pos_array[], const int number_of_r
     int setting = stoi(input, nullptr);
     
     // check if it is a valid index
-    if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS - 1 ) {
       std::cerr << "Error: Position config contains a number not between 0 and 25" << std::endl;
       throw INVALID_INDEX;
     }

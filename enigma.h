@@ -5,7 +5,7 @@
 #include "plugboard.h"
 #include "rotor.h"
 
-/* This is a user defined class for Enigma macihne, which contains the other key components as its member function. The engima machine encrypts messages be sending it through each of these components, starting from the plugboard, through the rotors (if any) from right to left, hitting the reflector, before returning through the rotors in the opposite direction back into the plugboard and ouput the encoded message via the standard output stream. 
+/* This is a user defined class for Enigma machine, which contains the other key components as its member function. The engima machine encrypts messages be sending it through each of these components, starting from the plugboard, through the rotors (if any) from right to left, hitting the reflector, before returning through the rotors in the opposite direction back into the plugboard and ouput the encoded message via the standard output stream. 
 
 Please refer to their respective .h file for information on the other components.
  */

@@ -58,7 +58,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     int setting = stoi(input, nullptr);
     
     // check if a is a valid index
-    if ( setting < 0 || setting > NUM_OF_ALPHABETS ) {
+    if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
       std::cerr << "Error: Plugboard setting contains a number not between 0 and 25" << std::endl;
       throw INVALID_INDEX;
     }
@@ -66,7 +66,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     // add to plugboard setting
     pb_setting[count] = setting;
     
-    // check if plugboard connects with itself
+    // for every odd index, check if plugboard connects with itself
     if ( count % 2 != 0 && pb_setting[count - 1] == pb_setting[count] ){
       std::cerr << "Error: Plugboard attempts to connect a contact with itself" << std::endl;
       throw IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
