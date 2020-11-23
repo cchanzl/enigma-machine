@@ -51,7 +51,7 @@ void check_command_line(int argc, char* argv[]){
   for ( int i = 1; i < argc; i++){
     char dot = argv[i][0];
     int count = 0;
-    int check_arg = 1;
+    bool check_arg = true;
     
     // count number of chars until '.'
     while ( dot != '.'){
@@ -71,7 +71,7 @@ void check_command_line(int argc, char* argv[]){
     // check extension for pos
     if(i == argc-1) check_arg = check_extension(count, "pos", i, argv);
         
-    if ( check_arg == 0) {
+    if ( check_arg == false) {
       std::cerr <<  "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << std::endl; 
       throw ERROR_OPENING_CONFIGURATION_FILE;
     }  
