@@ -57,7 +57,7 @@ void Plugboard::load_pb_setting(const char* filename, int pb_mapping[NUM_OF_ALPH
     // convert string to integer if numeric
     int setting = stoi(input, nullptr);
     
-    // check if a is a valid index
+    // check if a is a valid index between 0 and 25
     if ( setting < 0 || setting > NUM_OF_ALPHABETS-1 ) {
       std::cerr << "Error: Plugboard setting contains a number not between 0 and 25" << std::endl;
       throw INVALID_INDEX;

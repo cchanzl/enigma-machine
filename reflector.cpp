@@ -9,8 +9,7 @@
 
 // this function scrambles input through the reflector
 int Reflector::reflector_output(int input) const {
-  int output;
-  return output = rf_mapping[input];
+  return rf_mapping[input];
 }
 
 
@@ -31,7 +30,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
   // cycles through each char in input and assign to reflector array
   while(in >> input){
 
-    // check if while loop enters 27th loop, if yes, means there are 27 param
+    // check if while loop enters 26th loop, if yes, means there are more than 26 param
     if ( count == NUM_OF_ALPHABETS ){
       std::cerr << "Incorrect (odd) number of parameters in reflector file reflector.rf" << std::endl;
       throw INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS; 
@@ -49,7 +48,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
     // convert string to integer if numeric
     int setting = stoi(input, nullptr);
     
-    // check if it is a valid index
+    // check if it is a valid index between 0 and 25
     if ( setting < 0 || setting > NUM_OF_ALPHABETS - 1 ) {
       std::cerr << "Error: Reflector setting contains a number not between 0 and 25" << std::endl;
       throw INVALID_INDEX;
@@ -83,7 +82,7 @@ void Reflector::load_rf_setting(const char* filename, int rf_mapping[NUM_OF_ALPH
   }
 
   // check if there are lesser than 26 parameters
-  if ( count < NUM_OF_ALPHABETS ) {    // 26 because the last loop will increment count one more time
+  if ( count < NUM_OF_ALPHABETS ) {   
     std::cerr << "Insufficient number of mappings in reflector file: reflector.rf" << std::endl;
     throw INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
   }    
