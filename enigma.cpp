@@ -24,6 +24,17 @@ int search_array(const int mapping[], const int value){
 
 }
 
+// Checks extension of a filename. Returns true if it matches.
+bool check_extension(int count, std::string extension, int position, char* argv[]){
+
+  int length = extension.length();
+  for (int i = 0; i < length; i++){
+    if(argv[position][count + i] != extension.at(i)) return false;
+  }
+
+  // extension matches. returns true.
+  return true;
+}
 
 // ========== functions that are not member of any user defined class ==========
 
@@ -36,6 +47,37 @@ void check_command_line(int argc, char* argv[]){
     throw INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
+  // check that command line config files has the correct file extension
+  for ( int i = 1; i < argc; i++){
+    char dot = argv[i][0];
+    int count = 0;
+    int check_arg = 1;
+    
+    // count number of chars until '.'
+    while ( dot != '.'){
+      dot = argv[i][count];
+      count++;
+    }    
+
+    // check extension for pb
+    if(i==1) check_arg = check_extension(count, "pb", i, argv);
+    
+    // check extension for rf
+    if(i==2) check_arg = check_extension(count, "rf", i, argv);
+    
+    // check extension for rot
+    if(i > 2 && i < argc-1) check_arg = check_extension(count, "rot", i, argv);
+        
+    // check extension for pos
+    if(i == argc-1) check_arg = check_extension(count, "pos", i, argv);
+        
+    if ( check_arg == 0) {
+      std::cerr <<  "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << std::endl; 
+      throw ERROR_OPENING_CONFIGURATION_FILE;
+    }  
+
+    
+  }
 }
 
 

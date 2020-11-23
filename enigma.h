@@ -1,6 +1,7 @@
 #ifndef ENIGMA_H
 #define ENIGMA_H
 
+#include<string>
 #include "reflector.h"  
 #include "plugboard.h"
 #include "rotor.h"
@@ -44,7 +45,8 @@ void check_command_line(int argc, char* argv[]);
 // this function searches the array for the position of the value and returns the index when it is found. It returns -1 otherwise. 
 int search_array(const int mapping[], const int value);
 
-
+// checks extension of a filename. Returns true if it matches.
+bool check_extension(int count, std::string extension, int position, char* argv[]);
 
 
 #endif
